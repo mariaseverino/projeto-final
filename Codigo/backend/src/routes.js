@@ -8,6 +8,7 @@ const controllerDiscente = new ControllerDiscente();
 
 routes
     .post("/discente", controllerDiscente.cadastrarDiscente)
-    .put("/discente/:id", controllerDiscente.alterarDadosDiscente);
+    .put("/discente/:id", controllerDiscente.alterarDadosDiscente)
+    .delete("/discente/:id", controllerDiscente.removerDiscente);
 
 module.exports = routes;

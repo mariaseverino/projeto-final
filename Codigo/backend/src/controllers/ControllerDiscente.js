@@ -33,6 +33,18 @@ class ControllerDiscente {
             return res.status(500).send();
         }
     }
+
+    async removerDiscente(req, res) {
+        try {
+            const { id } = req.params;
+
+            await knex("discentes").where({ id }).del();
+
+            return res.send();
+        } catch (error) {
+            return res.status(500).send();
+        }
+    }
 }
 
 module.exports = ControllerDiscente;
