@@ -16,6 +16,23 @@ class ControllerDiscente {
             return res.status(500).send();
         }
     }
+
+    async alterarDadosDiscente(req, res) {
+        try {
+            const { name } = req.body;
+            const { id } = req.params;
+
+            await knex("discentes")
+                .update({
+                    name,
+                })
+                .where({ id });
+
+            return res.send();
+        } catch (error) {
+            return res.status(500).send();
+        }
+    }
 }
 
 module.exports = ControllerDiscente;
