@@ -5,7 +5,7 @@ class ControllerBiblioteca {
         try {
             const discentes = await knex("discentes");
 
-            return res.status(201).json(discentes);
+            return res.json(discentes);
         } catch (error) {
             return res.status(500).send();
         }
