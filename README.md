@@ -9,18 +9,21 @@
 
 <p align="center">
  <a href="#Sobre">Sobre</a> •
- <a href="#Prototipo">Prototipo do Projeto</a> •
+ <a href="#Prototipo">Protótipo do projeto</a> •
  <a href="#Tecnologias">Tecnologias</a> •
- <a href="#Estrutura de Diretorios">Estrutura de Diretorios</a> •
- <a href="#Como executar o projeto">Como executar</a> •
- <a href="#Padrões de Commit">Padrões de Commit</a> •
+ <a href="#Estrutura de Diretorios">Estrutura de diretórios</a>
+</p>
+
+<p align="center">
+ <a href="#Como executar o projeto">Como executar o projeto</a> •
+ <a href="#Padrões de Commit">Padrões de commit</a>
 </p>
 
 ## :sparkles: Sobre
 
 O sistema implementado tem o objetivo de ajudar na organização de uma biblioteca universitária, possibilitando o controle de empréstimo dos livros. Os funcionários serão responsáveis por cadastrar os alunos, os livros, e as informações referentes ao empréstimo.
 
-## :lipstick: Prototipo do Projeto
+## :lipstick: Protótipo do projeto
 
 -   **[Figma](https://www.figma.com/file/nWi4kwhiHhkOdGy4M4uC2y/Untitled?node-id=0%3A1)**
 
@@ -30,7 +33,7 @@ O sistema implementado tem o objetivo de ajudar na organização de uma bibliote
 -   React
 -   MySql
 
-## :open_file_folder: Estrutura de Diretorios
+## :open_file_folder: Estrutura de diretórios
 
 ```
 ├── Codigo
@@ -66,7 +69,7 @@ $ yarn start
 # Rodando em http://localhost:3000
 ```
 
-## :pushpin: Padrões de Commit
+## :pushpin: Padrões de commit
 
 -   Utilizar verbos no gerúndio
 -   Fazer referência ao requisito que esta sendo desenvolvido ou foi implementado
