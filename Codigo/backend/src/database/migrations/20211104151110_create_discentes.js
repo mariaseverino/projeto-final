@@ -1,8 +1,8 @@
 exports.up = function (knex) {
     return knex.schema.createTable("discentes", (table) => {
-        table.increments("id");
-        table.string("name", 50).unique().notNullable();
-        table.integer("matricula", 10).unique().notNullable();
+        table.increments("id").primary();
+        table.string("nome", 50).unique().notNullable();
+        table.integer("matricula", 9).unique().notNullable();
         table.integer("cpf", 11).unique().notNullable();
     });
 };
