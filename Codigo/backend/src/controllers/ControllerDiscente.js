@@ -3,34 +3,32 @@ const knex = require("../database");
 class ControllerDiscente {
     async cadastrarDiscente(req, res) {
         try {
-            const { name, matricula, cpf } = req.body;
+            // obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro
+            const { nome, matricula, cpf } = req.body;
 
             await knex("discentes").insert({
-                name,
+                nome,
                 matricula,
                 cpf,
             });
 
             return res.status(201).send();
         } catch (error) {
-            return res.status(500).send();
+            return res.status(400).send();
         }
     }
 
     async alterarDadosDiscente(req, res) {
         try {
-            const { name } = req.body;
+            // basta que pelo menos 1 dado seja informado
+            const dados = req.body;
             const { id } = req.params;
 
-            await knex("discentes")
-                .update({
-                    name,
-                })
-                .where({ id });
+            await knex("discentes").update(dados).where({ id });
 
             return res.send();
         } catch (error) {
-            return res.status(500).send();
+            return res.status(400).send();
         }
     }
 
@@ -42,7 +40,7 @@ class ControllerDiscente {
 
             return res.send();
         } catch (error) {
-            return res.status(500).send();
+            return res.json(error);
         }
     }
 }
