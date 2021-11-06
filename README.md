@@ -46,6 +46,10 @@ O sistema implementado tem o objetivo de ajudar na organização de uma bibliote
 
 ## 🤔 Como executar o projeto
 
+### :rotating_light: Pré requisito
+
+Antes de começar, você vai precisar ter instalado em sua máquina o [Node.js](https://nodejs.org/). De modo opcional, seria interessante também ter instalado o gerenciador de pacotes [yarn](https://yarnpkg.com/).
+
 ```bash
 # Clone este repositório
 $ git clone git clone https://github.com/mariaseverino/projeto-final.git
@@ -67,6 +71,16 @@ $ yarn install
 $ yarn start
 
 # Rodando em http://localhost:3000
+```
+
+**Obs**: Caso não tenha o yarn instalado
+
+```bash
+# Instale as dependências
+$ npm install
+
+# Execute a aplicação
+$ npm start
 ```
 
 ## :pushpin: Padrões de commit
