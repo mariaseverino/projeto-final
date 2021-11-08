@@ -42,6 +42,7 @@ O sistema implementado tem o objetivo de ajudar na organização de uma bibliote
 ├── Padrões Adotados
 └── Requisitos
     └── Diagrama de Classe
+        └── Diagrama de Sequencia
 ```
 
 ## 🤔 Como executar o projeto
@@ -65,22 +66,22 @@ $ cd projeto-final
 $ cd Codigo/backend
 
 # Instale as dependências
-$ yarn install
-
-# Execute a aplicação
-$ yarn start
-
-# Rodando em http://localhost:3000
-```
-
-**Obs**: Caso não tenha o yarn instalado
-
-```bash
-# Instale as dependências
 $ npm install
 
 # Execute a aplicação
 $ npm start
+
+# Rodando em http://localhost:3000
+```
+
+**Obs**: Caso tenha o yarn instalado
+
+```bash
+# Instale as dependências
+$ yarn
+
+# Execute a aplicação
+$ yarn start
 ```
 
 ## :pushpin: Padrões de commit
