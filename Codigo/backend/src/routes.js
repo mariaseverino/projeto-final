@@ -6,8 +6,11 @@ const ControllerDiscente = require("./controllers/ControllerDiscente");
 
 const ControllerExemplar = require("./controllers/ControllerExemplar");
 
+const ControllerEmprestimo = require("./controllers/ControllerEmprestimo");
+
 const controllerDiscente = new ControllerDiscente();
 const controllerExemplar = new ControllerExemplar();
+const controllerEmprestimo = new ControllerEmprestimo();
 
 routes
     .get("/discentes", controllerDiscente.listar)
@@ -18,6 +21,8 @@ routes
     .get("/exemplares", controllerExemplar.listar)
     .post("/exemplar", controllerExemplar.criar)
     .put("/exemplar/:id", controllerExemplar.alterar)
-    .delete("/exemplar/:id", controllerExemplar.remover);
+    .delete("/exemplar/:id", controllerExemplar.remover)
+
+    .get("/emprestimos", controllerEmprestimo.listar);
 
 module.exports = routes;
