@@ -1,16 +1,26 @@
-const knex = require("../database");
+const DiscenteDAO = require("../Persistence/DiscenteDAO");
 
 class ControllerDiscente {
-    async cadastrarDiscente(req, res) {
+    async listar(req, res) {
         try {
-            // obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro
+            let discenteDAO = new DiscenteDAO();
+
+            const dados = await discenteDAO.listarDiscentes();
+
+            return res.json(dados);
+        } catch (error) {
+            return res.status(500).send();
+        }
+    }
+
+    async criar(req, res) {
+        try {
+            /* obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro */
             const { nome, matricula, cpf } = req.body;
 
-            await knex("discentes").insert({
-                nome,
-                matricula,
-                cpf,
-            });
+            let discenteDAO = new DiscenteDAO();
+
+            await discenteDAO.cadastrarDiscente(nome, matricula, cpf);
 
             return res.status(201).send();
         } catch (error) {
@@ -18,13 +28,15 @@ class ControllerDiscente {
         }
     }
 
-    async alterarDadosDiscente(req, res) {
+    async alterar(req, res) {
         try {
-            // basta que pelo menos 1 dado seja informado
+            /* basta que pelo menos 1 dado seja informado */
             const dados = req.body;
             const { id } = req.params;
 
-            await knex("discentes").update(dados).where({ id });
+            let discenteDAO = new DiscenteDAO();
+
+            await discenteDAO.alterarDadosDiscente(dados, id);
 
             return res.send();
         } catch (error) {
@@ -32,11 +44,13 @@ class ControllerDiscente {
         }
     }
 
-    async removerDiscente(req, res) {
+    async remover(req, res) {
         try {
             const { id } = req.params;
 
-            await knex("discentes").where({ id }).del();
+            let discenteDAO = new DiscenteDAO();
+
+            await discenteDAO.removerDiscente(id);
 
             return res.send();
         } catch (error) {
