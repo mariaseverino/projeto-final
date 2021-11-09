@@ -19,6 +19,10 @@ class ExemplarDAO {
     async alterarDadosExemplar(dados, id) {
         await knex("exemplares").update(dados).where({ id });
     }
+
+    async removerExemplar(id) {
+        await knex("exemplares").where({ id }).del();
+    }
 }
 
 module.exports = ExemplarDAO;

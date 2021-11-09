@@ -17,6 +17,7 @@ routes
 
     .get("/exemplares", controllerExemplar.listar)
     .post("/exemplar", controllerExemplar.criar)
-    .put("/exemplar/:id", controllerExemplar.alterar);
+    .put("/exemplar/:id", controllerExemplar.alterar)
+    .delete("/exemplar/:id", controllerExemplar.remover);
 
 module.exports = routes;

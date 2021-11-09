@@ -49,6 +49,20 @@ class ControllerExemplar {
             return res.status(400).send();
         }
     }
+
+    async remover(req, res) {
+        try {
+            const { id } = req.params;
+
+            let exemplarDAO = new ExemplarDAO();
+
+            await exemplarDAO.removerExemplar(id);
+
+            return res.send();
+        } catch (error) {
+            return res.json(error);
+        }
+    }
 }
 
 module.exports = ControllerExemplar;
