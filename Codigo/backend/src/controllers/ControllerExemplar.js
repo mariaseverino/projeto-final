@@ -33,6 +33,22 @@ class ControllerExemplar {
             return res.status(400).send();
         }
     }
+
+    async alterar(req, res) {
+        try {
+            /* basta que pelo menos 1 dado seja informado */
+            const dados = req.body;
+            const { id } = req.params;
+
+            let exemplarDAO = new ExemplarDAO();
+
+            await exemplarDAO.alterarDadosExemplar(dados, id);
+
+            return res.send();
+        } catch (error) {
+            return res.status(400).send();
+        }
+    }
 }
 
 module.exports = ControllerExemplar;

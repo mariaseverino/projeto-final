@@ -15,6 +15,10 @@ class ExemplarDAO {
             qtdExemplares,
         });
     }
+
+    async alterarDadosExemplar(dados, id) {
+        await knex("exemplares").update(dados).where({ id });
+    }
 }
 
 module.exports = ExemplarDAO;

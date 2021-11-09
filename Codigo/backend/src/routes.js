@@ -16,6 +16,7 @@ routes
     .delete("/discente/:id", controllerDiscente.remover)
 
     .get("/exemplares", controllerExemplar.listar)
-    .post("/exemplar", controllerExemplar.criar);
+    .post("/exemplar", controllerExemplar.criar)
+    .put("/exemplar/:id", controllerExemplar.alterar);
 
 module.exports = routes;
