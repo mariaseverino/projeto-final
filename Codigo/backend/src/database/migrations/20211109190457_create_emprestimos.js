@@ -1,13 +1,13 @@
 exports.up = function (knex) {
     return knex.schema.createTable("emprestimos", (table) => {
         table.increments("id").primary();
-        table.integer("idDiscente").unsigned().notNullable();
-        table.integer("idExemplar").unsigned().notNullable();
-        table.timestamp("inicio").notNullable();
-        table.timestamp("fim");
+        table.integer("idDiscente").notNullable();
+        table.integer("idExemplar").notNullable();
+        table.datetime("inicio").defaultTo(knex.fn.now());
+        table.datetime("fim").nullable();
 
-        table.foreign("idDiscente").references("id").inTable("discentes");
-        table.foreign("idExemplar").references("id").inTable("exemplar");
+        // table.foreign("idDiscente").references("id").inTable("discentes");
+        // table.foreign("idExemplar").references("id").inTable("exemplares");
     });
 };
 
