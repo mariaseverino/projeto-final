@@ -1,8 +1,12 @@
 module.exports = {
     development: {
-        client: "sqlite3",
+        client: "mysql",
         connection: {
-            filename: "./src/database/db.sqlite",
+            host: "localhost",
+            port: 3306,
+            user: "root",
+            password: "password",
+            database: "biblioteca",
         },
         migrations: {
             directory: "./src/database/migrations",
