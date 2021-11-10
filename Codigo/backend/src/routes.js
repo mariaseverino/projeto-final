@@ -23,6 +23,7 @@ routes
     .put("/exemplar/:id", controllerExemplar.alterar)
     .delete("/exemplar/:id", controllerExemplar.remover)
 
-    .get("/emprestimos", controllerEmprestimo.listar);
+    .get("/emprestimos", controllerEmprestimo.listar)
+    .post("/emprestimo/:id", controllerEmprestimo.criar);
 
 module.exports = routes;
