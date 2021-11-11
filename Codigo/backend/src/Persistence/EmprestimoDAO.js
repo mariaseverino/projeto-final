@@ -37,32 +37,35 @@ class EmprestimoDAO {
             .update({ qtdExemplares })
             .where({ id: idExemplar });
 
-        const dataEntrega = new Date();
-        console.log(dataEntrega);
+        const dataEmprestimo = new Date();
+        const dataLimite = new Date();
+        console.log(dataLimite);
 
-        dataEntrega.setDate(dataEntrega.getDate() + 5);
-        console.log(dataEntrega.toJSON());
+        dataLimite.setDate(dataLimite.getDate() + 5);
+        console.log(dataLimite.toJSON());
 
         await knex("emprestimos").insert({
             idDiscente: discenteExiste.id,
             idExemplar,
-            entrega: dataEntrega.toJSON(),
+            dataEmprestimo,
+            dataLimite: dataLimite.toJSON(),
         });
     }
     async renovarEmprestimo(id) {
         let data = await knex("emprestimos")
             .where({ id })
-            .select("entrega")
+            .select("dataLimite")
             .first();
 
-        let novaData = new Date(data.inicio);
+        console.log(data);
+        let novaData = new Date(data.dataLimite);
         console.log(novaData);
         novaData.setDate(novaData.getDate() + 5);
 
         console.log(novaData.toJSON());
 
         await knex("emprestimos")
-            .update({ entrega: novaData.toJSON() })
+            .update({ dataLimite: novaData.toJSON() })
             .where({ id });
     }
 
