@@ -1,4 +1,3 @@
-const { json } = require("express");
 const knex = require("../database");
 
 class EmprestimoDAO {
@@ -12,11 +11,29 @@ class EmprestimoDAO {
             .select("id")
             .where({ matricula });
 
-        if (!discenteExiste.length) {
+        if (discenteExiste.length == 0) {
             throw new Error("Discente não encontrado");
         }
 
+        const exemplar = await knex("exemplares")
+            .select("qtdExemplares")
+            .where({ id: idExemplar });
+
         let idDiscente = JSON.parse(JSON.stringify(discenteExiste));
+
+        let qtdExemplares = JSON.parse(JSON.stringify(exemplar));
+
+        if (qtdExemplares[0].qtdExemplares < 1) {
+            throw new Error("Não há exemplar disponivel");
+        }
+
+        qtdExemplares = qtdExemplares[0].qtdExemplares - 1;
+
+        console.log(qtdExemplares);
+
+        await knex("exemplares")
+            .update({ qtdExemplares: qtdExemplares })
+            .where({ id: idExemplar });
 
         idDiscente = idDiscente[0].id;
 

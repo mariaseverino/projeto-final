@@ -13,7 +13,7 @@ class ControllerEmprestimo {
         }
     }
 
-    async criar(req, res, next) {
+    async criar(req, res) {
         try {
             const { matricula } = req.body;
             const { id } = req.params;
