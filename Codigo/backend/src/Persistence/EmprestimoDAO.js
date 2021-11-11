@@ -6,46 +6,48 @@ class EmprestimoDAO {
         return emprestimos;
     }
 
+    /* ver se o discente ja possui o livro que ele quer pegar emprestado? */
     async cadastrarEmprestimo(matricula, idExemplar) {
         const discenteExiste = await knex("discentes")
             .select("id")
-            .where({ matricula });
+            .where({ matricula })
+            .first();
 
-        if (discenteExiste.length == 0) {
+        if (discenteExiste === undefined) {
             throw new Error("Discente não encontrado");
         }
+        console.log(discenteExiste);
 
         const exemplar = await knex("exemplares")
             .select("qtdExemplares")
-            .where({ id: idExemplar });
+            .where({ id: idExemplar })
+            .first();
 
-        let idDiscente = JSON.parse(JSON.stringify(discenteExiste));
+        console.log(exemplar);
 
-        let qtdExemplares = JSON.parse(JSON.stringify(exemplar));
-
-        if (qtdExemplares[0].qtdExemplares < 1) {
+        if (exemplar.qtdExemplares < 1) {
             throw new Error("Não há exemplar disponivel");
         }
 
-        qtdExemplares = qtdExemplares[0].qtdExemplares - 1;
+        let qtdExemplares = exemplar.qtdExemplares - 1;
 
         console.log(qtdExemplares);
 
         await knex("exemplares")
-            .update({ qtdExemplares: qtdExemplares })
+            .update({ qtdExemplares })
             .where({ id: idExemplar });
 
-        idDiscente = idDiscente[0].id;
+        const dataEntrega = new Date();
+        console.log(dataEntrega);
 
-        const inicio = new Date();
+        dataEntrega.setDate(dataEntrega.getDate() + 5);
+        console.log(dataEntrega.toJSON());
 
-        if (idDiscente) {
-            await knex("emprestimos").insert({
-                idDiscente,
-                idExemplar,
-                inicio,
-            });
-        }
+        await knex("emprestimos").insert({
+            idDiscente: discenteExiste.id,
+            idExemplar,
+            entrega: dataEntrega.toJSON(),
+        });
     }
 }
 
