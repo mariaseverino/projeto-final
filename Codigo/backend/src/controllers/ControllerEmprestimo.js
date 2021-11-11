@@ -27,6 +27,19 @@ class ControllerEmprestimo {
             return res.status(404).send({ erro: err.message });
         }
     }
+    async renovar(req, res) {
+        try {
+            const { id } = req.params;
+
+            let emprestimoDAO = new EmprestimoDAO();
+
+            await emprestimoDAO.renovarEmprestimo(id);
+
+            return res.send();
+        } catch (err) {
+            return res.send({ erro: err.message });
+        }
+    }
 }
 
 module.exports = ControllerEmprestimo;

@@ -24,6 +24,7 @@ routes
     .delete("/exemplar/:id", controllerExemplar.remover)
 
     .get("/emprestimos", controllerEmprestimo.listar)
-    .post("/emprestimo/:id", controllerEmprestimo.criar);
+    .post("/emprestimo/:id", controllerEmprestimo.criar)
+    .put("/emprestimo/:id", controllerEmprestimo.renovar);
 
 module.exports = routes;

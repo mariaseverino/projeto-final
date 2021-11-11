@@ -49,6 +49,25 @@ class EmprestimoDAO {
             entrega: dataEntrega.toJSON(),
         });
     }
+    async renovarEmprestimo(id) {
+        let data = await knex("emprestimos")
+            .where({ id })
+            .select("entrega")
+            .first();
+
+        let novaData = new Date(data.inicio);
+        console.log(novaData);
+        novaData.setDate(novaData.getDate() + 5);
+
+        console.log(novaData.toJSON());
+
+        await knex("emprestimos")
+            .update({ entrega: novaData.toJSON() })
+            .where({ id });
+    }
+
+    /* apos emprestimo ser finalizado tem que aumentar quantidade de livro */
+    /* finalizar -> remover a */
 }
 
 module.exports = EmprestimoDAO;
