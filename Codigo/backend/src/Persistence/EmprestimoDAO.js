@@ -2,7 +2,14 @@ const knex = require("../database");
 
 class EmprestimoDAO {
     async listarEmprestimos() {
-        const emprestimos = await knex("emprestimos");
+        const emprestimos = await knex("emprestimos")
+            .join("discentes", "emprestimos.idDiscente", "=", "discentes.id")
+            .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
+            .select(
+                "exemplares.nome",
+                "discentes.matricula",
+                "emprestimos.dataLimite"
+            );
         return emprestimos;
     }
 
