@@ -67,10 +67,29 @@ class EmprestimoDAO {
             .select("dataLimite")
             .first();
 
-        console.log(data);
+        const exemplar = await knex("emprestimos")
+            .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
+            .select(
+                "exemplares.qtdEmprestimo",
+                "exemplares.id",
+                "emprestimos.idDiscente"
+            )
+            .where("emprestimos.id", "=", id)
+            .first();
+
+        let novaqtdEmprestimo = exemplar.qtdEmprestimo + 1;
+
+        await knex("exemplares")
+            .update({ qtdEmprestimo: novaqtdEmprestimo })
+            .where({ id: exemplar.id });
+
         let novaData = new Date(data.dataLimite);
-        console.log(novaData);
+
         novaData.setDate(novaData.getDate() + 5);
+
+        await knex("discentes")
+            .update({ ultimoEmprestimo: new Date().toJSON() })
+            .where({ id: exemplar.idDiscente });
 
         console.log(novaData.toJSON());
 
