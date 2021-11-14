@@ -25,6 +25,17 @@ class ExemplarDAO {
     }
 
     async removerExemplar(id) {
+        const exemplar = await knex("exemplares")
+            .join("emprestimos", "exemplares.id", "=", "emprestimos.idExemplar")
+            .where("status", true)
+            .select("status")
+            .first();
+
+        console.log(exemplar);
+
+        if (exemplar !== undefined) {
+            throw new Error("Exemplar não pode ser removido");
+        }
         await knex("exemplares").where({ id }).del();
     }
 }
