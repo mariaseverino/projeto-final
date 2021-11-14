@@ -1,0 +1,70 @@
+/* fonte: vamos usar roboto 400 regular - 500 medium - 700 bold */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+#home {
+    height: 100vh;
+}
+
+#home-header {
+    display: flex;
+    height: 60px;
+    align-items: center;
+}
+
+#icon-sair {
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 10px;
+}
+
+#icon-sair:hover {
+    opacity: 0.7;
+}
+
+#home-container {
+    max-width: 1000px;
+    height: 80vh;
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.bloco {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: #6159e5;
+    /* text-align: center; */
+    /* justify-content: center; */
+    /* margin: auto; */
+}
+
+.bloco:hover {
+    opacity: 0.9;
+}
+/*
+#discentes {
+    background-color: brown;
+}
+
+#acervo {
+    background-color: chartreuse;
+}
+
+#emprestimos {
+    background-color: darkblue;
+} */
+
+#titulo-bloco {
+    color: white;
+    /* 400 regular - 500 medium - 700 bold */
+    font: 500 32px "Roboto";
+}
