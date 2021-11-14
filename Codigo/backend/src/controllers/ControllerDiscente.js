@@ -8,8 +8,8 @@ class ControllerDiscente {
             const dados = await discenteDAO.listarDiscentes();
 
             return res.json(dados);
-        } catch (error) {
-            return res.status(500).send();
+        } catch (err) {
+            return res.json({ erro: err.message });
         }
     }
 
@@ -24,7 +24,7 @@ class ControllerDiscente {
 
             return res.status(201).send();
         } catch (error) {
-            return res.status(400).send();
+            return res.json({ erro: err.message });
         }
     }
 
@@ -39,8 +39,8 @@ class ControllerDiscente {
             await discenteDAO.alterarDadosDiscente(dados, id);
 
             return res.send();
-        } catch (error) {
-            return res.status(400).send();
+        } catch (err) {
+            return res.json({ erro: err.message });
         }
     }
 
@@ -53,8 +53,8 @@ class ControllerDiscente {
             await discenteDAO.removerDiscente(id);
 
             return res.send();
-        } catch (error) {
-            return res.json(error);
+        } catch (err) {
+            return res.json({ erro: err.message });
         }
     }
 }
