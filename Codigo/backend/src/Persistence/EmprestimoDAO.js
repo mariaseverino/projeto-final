@@ -100,6 +100,41 @@ class EmprestimoDAO {
 
     /* apos emprestimo ser finalizado tem que aumentar quantidade de livro */
     /* finalizar -> remover a */
+    async finalizarEmprestimo(id) {
+        // const dataEmprestimo = new Date();
+        const dataEntrega = new Date();
+        console.log(dataEntrega);
+
+        // dataEntrega.setDate(dataEntrega.getDate() + 5);
+        console.log(dataEntrega.toJSON());
+
+        const emprestimo = await knex("emprestimos")
+            .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
+            .select(
+                "exemplares.qtdExemplares",
+                "exemplares.id",
+                "emprestimos.idDiscente"
+            )
+            .where("emprestimos.id", "=", id)
+            .first();
+
+        console.log(emprestimo);
+
+        let qtdExemplares = emprestimo.qtdExemplares + 1;
+        let numEmprestimos = emprestimo.numEmprestimos - 1;
+
+        await knex("emprestimos")
+            .update({ dataEntrega: dataEntrega.toJSON(), status: false })
+            .where({ id });
+
+        await knex("exemplares")
+            .update({ qtdExemplares })
+            .where({ id: emprestimo.id });
+
+        await knex("discentes")
+            .update({ numEmprestimos })
+            .where({ id: emprestimo.idDiscente });
+    }
 }
 
 module.exports = EmprestimoDAO;
