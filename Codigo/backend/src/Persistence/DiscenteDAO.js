@@ -2,7 +2,7 @@ const knex = require("../database");
 
 class DiscenteDAO {
     async listarDiscentes() {
-        const discentes = await knex("discentes");
+        const discentes = await knex("discentes").select("nome", "matricula");
         return discentes;
     }
 
