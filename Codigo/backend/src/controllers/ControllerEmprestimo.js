@@ -40,6 +40,20 @@ class ControllerEmprestimo {
             return res.send({ erro: err.message });
         }
     }
+
+    async finalizar(req, res) {
+        try {
+            const { id } = req.params;
+
+            let emprestimoDAO = new EmprestimoDAO();
+
+            await emprestimoDAO.finalizarEmprestimo(id);
+
+            return res.send();
+        } catch (err) {
+            return res.send({ erro: err.message });
+        }
+    }
 }
 
 module.exports = ControllerEmprestimo;
