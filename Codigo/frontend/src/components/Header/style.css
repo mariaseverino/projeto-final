@@ -1,0 +1,17 @@
+#container-header {
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#icon-header {
+    margin-left: 10px;
+    margin-right: 10px;
+    border: none;
+    background: transparent;
+}
+
+#icon-header:hover {
+    opacity: 0.7;
+}
