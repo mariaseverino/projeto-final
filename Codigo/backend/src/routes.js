@@ -25,6 +25,7 @@ routes
 
     .get("/emprestimos", controllerEmprestimo.listar)
     .post("/emprestimo/:id", controllerEmprestimo.criar)
-    .put("/emprestimo/:id", controllerEmprestimo.renovar);
+    .put("/emprestimo/:id", controllerEmprestimo.renovar)
+    .put("/emprestimo/finalizar/:id", controllerEmprestimo.finalizar);
 
 module.exports = routes;
