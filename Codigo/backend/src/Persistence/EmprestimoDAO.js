@@ -16,48 +16,51 @@ class EmprestimoDAO {
     /* ver se o discente ja possui o livro que ele quer pegar emprestado? */
     async cadastrarEmprestimo(matricula, idExemplar) {
         const discenteExiste = await knex("discentes")
-            .select("id")
+            .select("id", "numEmprestimos")
             .where({ matricula })
             .first();
 
         if (discenteExiste === undefined) {
             throw new Error("Discente não encontrado");
         }
-        console.log(discenteExiste);
 
         const exemplar = await knex("exemplares")
-            .select("qtdExemplares")
+            .select("qtdExemplares", "qtdEmprestimo")
             .where({ id: idExemplar })
             .first();
-
-        console.log(exemplar);
 
         if (exemplar.qtdExemplares < 1) {
             throw new Error("Não há exemplar disponivel");
         }
 
         let qtdExemplares = exemplar.qtdExemplares - 1;
-
-        console.log(qtdExemplares);
+        let qtdEmprestimo = exemplar.qtdEmprestimo + 1;
+        let numEmprestimos = exemplar.numEmprestimos + 1;
 
         await knex("exemplares")
-            .update({ qtdExemplares })
+            .update({ qtdExemplares, qtdEmprestimo })
             .where({ id: idExemplar });
 
         const dataEmprestimo = new Date();
         const dataLimite = new Date();
-        console.log(dataLimite);
 
         dataLimite.setDate(dataLimite.getDate() + 5);
-        console.log(dataLimite.toJSON());
+
+        await knex("discentes")
+            .update({
+                numEmprestimos,
+                ultimoEmprestimo: dataEmprestimo.toJSON(),
+            })
+            .where({ matricula });
 
         await knex("emprestimos").insert({
             idDiscente: discenteExiste.id,
             idExemplar,
-            dataEmprestimo,
+            dataEmprestimo: dataEmprestimo.toJSON(),
             dataLimite: dataLimite.toJSON(),
         });
     }
+
     async renovarEmprestimo(id) {
         let data = await knex("emprestimos")
             .where({ id })
