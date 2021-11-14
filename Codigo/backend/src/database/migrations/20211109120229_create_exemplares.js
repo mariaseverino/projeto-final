@@ -6,6 +6,7 @@ exports.up = function (knex) {
         table.string("autor", 50).notNullable();
         table.string("editora", 20).notNullable();
         table.integer("qtdExemplares", 6).notNullable();
+        table.integer("qtdEmprestimo", 6).defaultTo(0);
     });
 };
 

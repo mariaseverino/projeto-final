@@ -5,10 +5,11 @@ exports.up = function (knex) {
         table.integer("idExemplar").notNullable();
         table.datetime("dataEmprestimo");
         table.datetime("dataLimite");
-        table.datetime("datEntrega");
+        table.datetime("dataEntrega");
+        table.boolean("status").defaultTo(true);
 
-        // table.foreign("idDiscente").references("id").inTable("discentes");
-        // table.foreign("idExemplar").references("id").inTable("exemplares");
+        table.foreign("idDiscente").references("id").inTable("discentes");
+        table.foreign("idExemplar").references("id").inTable("exemplares");
     });
 };
 

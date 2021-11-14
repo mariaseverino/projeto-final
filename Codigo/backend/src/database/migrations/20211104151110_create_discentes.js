@@ -4,6 +4,8 @@ exports.up = function (knex) {
         table.string("nome", 50).unique().notNullable();
         table.integer("matricula", 9).unique().notNullable();
         table.integer("cpf", 11).unique().notNullable();
+        table.integer("numEmprestimos").defaultTo(0);
+        table.datetime("ultimoEmprestimo");
     });
 };
 
