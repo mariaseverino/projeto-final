@@ -8,8 +8,8 @@ class ControllerExemplar {
             const dados = await exemplarDAO.listarExemplares();
 
             return res.json(dados);
-        } catch (error) {
-            return res.status(500).send();
+        } catch (err) {
+            return res.json({ erro: err.message });
         }
     }
 
@@ -29,8 +29,8 @@ class ControllerExemplar {
             );
 
             return res.status(201).send();
-        } catch (error) {
-            return res.status(400).send();
+        } catch (err) {
+            return res.json({ erro: err.message });
         }
     }
 
@@ -45,8 +45,8 @@ class ControllerExemplar {
             await exemplarDAO.alterarDadosExemplar(dados, id);
 
             return res.send();
-        } catch (error) {
-            return res.status(400).send();
+        } catch (err) {
+            return res.json({ erro: err.message });
         }
     }
 
@@ -59,8 +59,8 @@ class ControllerExemplar {
             await exemplarDAO.removerExemplar(id);
 
             return res.send();
-        } catch (error) {
-            return res.json(error);
+        } catch (err) {
+            return res.json({ erro: err.message });
         }
     }
 }
