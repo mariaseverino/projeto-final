@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import { useNavigate } from "react-router";
+// import { use } from "../../../../backend/src/routes";
+// import { useNavigate } from "react-router";
 
 import Header from "../../components/Header";
+import api from "../../services/api";
 
 import "./style.css";
 
 function ListarDiscentes() {
-    const dados = [
-        {
-            id: 1,
-            nome: "Maria Rita de Souza Severino",
-            matricula: "201820290",
-        },
-        {
-            id: 2,
-            nome: "Nicolas de Oliverira Aquivo Barbosa",
-            matricula: "201820290",
-        },
-    ];
+    const [discentes, setDiscentes] = useState([]);
+
+    useEffect(() => {
+        api.get("discentes").then(({ data }) => {
+            setDiscentes(data);
+        });
+    }, []);
+
+    // const dados = [
+    //     {
+    //         id: 1,
+    //         nome: "Maria Rita de Souza Severino",
+    //         matricula: "201820290",
+    //     },
+    //     {
+    //         id: 2,
+    //         nome: "Nicolas de Oliverira Aquivo Barbosa",
+    //         matricula: "201820290",
+    //     },
+    // ];
     return (
         <div id="listar-discentes">
             <Header />
@@ -34,7 +44,7 @@ function ListarDiscentes() {
                         <h2 id="matricula">Numero Matricula</h2>
                     </div>
                     <ul>
-                        {dados.map((dado) => (
+                        {discentes.map((dado) => (
                             <li key={dado.id}>
                                 <div id="info">
                                     <div id="nome">

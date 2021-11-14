@@ -80,6 +80,10 @@ button {
     border: none;
 }
 
+button:hover {
+    opacity: 0.85;
+}
+
 #editar {
     background-color: #49a1f1;
     color: white;
