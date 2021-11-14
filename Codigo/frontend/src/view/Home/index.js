@@ -11,6 +11,10 @@ function Home() {
         navigate("/");
     }
 
+    function opcoes(rota) {
+        navigate(`/${rota}`);
+    }
+
     return (
         <div id="home">
             <div id="home-header">
@@ -19,15 +23,19 @@ function Home() {
                 </button>
             </div>
             <div id="home-container">
-                <div className="bloco" id="discentes">
+                <button
+                    className="bloco"
+                    id="discentes"
+                    onClick={() => opcoes("discentes")}
+                >
                     <p id="titulo-bloco">Discentes</p>
-                </div>
-                <div className="bloco" id="acervo">
+                </button>
+                <button className="bloco" id="acervo" onClick={() => {}}>
                     <p id="titulo-bloco">Acervo</p>
-                </div>
-                <div className="bloco" id="emprestimos">
+                </button>
+                <button className="bloco" id="emprestimos" onClick={() => {}}>
                     <p id="titulo-bloco">Emprestimos</p>
-                </div>
+                </button>
             </div>
         </div>
     );
