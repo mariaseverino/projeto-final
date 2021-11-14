@@ -19,6 +19,19 @@ class DiscenteDAO {
     }
 
     async removerDiscente(id) {
+        const discente = await knex("discentes")
+            .join("emprestimos", "discentes.id", "=", "emprestimos.idDiscente")
+            .where("status", true)
+            .select("status")
+            .first();
+
+        console.log(discente);
+
+        if (discente !== undefined) {
+            throw new Error(
+                "Discente não pode ser removido, pois possui pendencias"
+            );
+        }
         await knex("discentes").where({ id }).del();
     }
 }
