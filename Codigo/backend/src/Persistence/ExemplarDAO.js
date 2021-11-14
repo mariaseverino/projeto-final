@@ -2,7 +2,11 @@ const knex = require("../database");
 
 class ExemplarDAO {
     async listarExemplares() {
-        const exemplares = await knex("exemplares");
+        const exemplares = await knex("exemplares").select(
+            "nome",
+            "isbn",
+            "qtdExemplares"
+        );
         return exemplares;
     }
 
