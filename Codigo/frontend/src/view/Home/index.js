@@ -30,7 +30,11 @@ function Home() {
                 >
                     <p id="titulo-bloco">Discentes</p>
                 </button>
-                <button className="bloco" id="acervo" onClick={() => {}}>
+                <button
+                    className="bloco"
+                    id="acervo"
+                    onClick={() => opcoes("exemplares")}
+                >
                     <p id="titulo-bloco">Acervo</p>
                 </button>
                 <button className="bloco" id="emprestimos" onClick={() => {}}>
