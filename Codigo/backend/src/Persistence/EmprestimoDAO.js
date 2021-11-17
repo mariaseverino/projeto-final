@@ -6,20 +6,24 @@ class EmprestimoDAO {
             .join("discentes", "emprestimos.idDiscente", "=", "discentes.id")
             .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
             .select(
+                "emprestimos.id",
                 "exemplares.nome",
                 "discentes.matricula",
-                "emprestimos.dataLimite"
+                "emprestimos.dataLimite",
+                "emprestimos.dataEntrega",
+                "emprestimos.status"
             );
         return emprestimos;
     }
 
     /* ver se o discente ja possui o livro que ele quer pegar emprestado? */
-    async cadastrarEmprestimo(matricula, idExemplar) {
+    async cadastrarEmprestimo(dado, idExemplar) {
         const discenteExiste = await knex("discentes")
             .select("id", "numEmprestimos")
-            .where({ matricula })
+            .where({ matricula: dado.matricula })
             .first();
 
+        console.log(dado.matricula);
         if (discenteExiste === undefined) {
             throw new Error("Discente não encontrado");
         }
@@ -51,7 +55,7 @@ class EmprestimoDAO {
                 numEmprestimos,
                 ultimoEmprestimo: dataEmprestimo.toJSON(),
             })
-            .where({ matricula });
+            .where({ matricula: dado.matricula });
 
         await knex("emprestimos").insert({
             idDiscente: discenteExiste.id,
