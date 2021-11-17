@@ -1,3 +1,4 @@
+const Emprestimo = require("../Model/Emprestimo");
 const EmprestimoDAO = require("../Persistence/EmprestimoDAO");
 
 class ControllerEmprestimo {
@@ -9,7 +10,7 @@ class ControllerEmprestimo {
 
             return res.json(dados);
         } catch (error) {
-            return res.status(500).send();
+            return res.send({ erro: err.message });
         }
     }
 
@@ -18,13 +19,15 @@ class ControllerEmprestimo {
             const { matricula } = req.body;
             const { id } = req.params;
 
+            let emprestimo = new Emprestimo(matricula);
+
             let emprestimoDAO = new EmprestimoDAO();
 
-            await emprestimoDAO.cadastrarEmprestimo(matricula, id);
+            await emprestimoDAO.cadastrarEmprestimo(emprestimo, id);
 
             return res.status(201).send();
         } catch (err) {
-            return res.status(404).send({ erro: err.message });
+            return res.send({ erro: err.message });
         }
     }
     async renovar(req, res) {
