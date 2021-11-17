@@ -3,6 +3,7 @@ const knex = require("../database");
 class ExemplarDAO {
     async listarExemplares() {
         const exemplares = await knex("exemplares").select(
+            "id",
             "nome",
             "isbn",
             "qtdExemplares"
@@ -10,18 +11,38 @@ class ExemplarDAO {
         return exemplares;
     }
 
-    async adicionarExemplar(nome, isbn, autor, editora, qtdExemplares) {
+    async adicionarExemplar(dados) {
         await knex("exemplares").insert({
-            nome,
-            isbn,
-            autor,
-            editora,
-            qtdExemplares,
+            nome: dados.nome,
+            isbn: dados.isbn,
+            autor: dados.autor,
+            editora: dados.editora,
+            qtdExemplares: dados.qtdExemplares,
         });
     }
 
     async alterarDadosExemplar(dados, id) {
-        await knex("exemplares").update(dados).where({ id });
+        const exemplar = await knex("exemplares")
+            .select("nome", "isbn", "autor", "editora", "qtdExemplares")
+            .where({ id })
+            .first();
+
+        console.log(dados);
+        await knex("exemplares")
+            .update({
+                nome: dados.nome === undefined ? exemplar.nome : dados.nome,
+                isbn: dados.isbn === undefined ? exemplar.isbn : dados.isbn,
+                autor: dados.autor === undefined ? exemplar.autor : dados.autor,
+                editora:
+                    dados.editora === undefined
+                        ? exemplar.editora
+                        : dados.editora,
+                qtdExemplares:
+                    dados.qtdExemplares === undefined
+                        ? exemplar.qtdExemplares
+                        : dados.qtdExemplares,
+            })
+            .where({ id });
     }
 
     async removerExemplar(id) {
