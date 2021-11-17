@@ -26,22 +26,22 @@ function ListarExemplares() {
                     <input id="busca" />
                 </div>
                 <div>
-                    <div id="titulo">
-                        <h2 id="tituloLivro">Titulos</h2>
-                        <h2 id="isbn">ISBN</h2>
-                        <h2 id="qtdLivros">Exemplares Disponiveis</h2>
+                    <div id="titulo-exemplar">
+                        <h2 id="nome-exemplar">Titulos</h2>
+                        <h2 id="isbn-exemplar">ISBN</h2>
+                        <h2 id="qtd-exemplar">Exemplares Disponiveis</h2>
                     </div>
                     <ul>
                         {exemplares.map((dado) => (
                             <li key={dado.id}>
-                                <div id="info">
-                                    <div id="nome">
+                                <div id="info-exemplar">
+                                    <div id="nome-exemplar">
                                         <p>{dado.nome}</p>
                                     </div>
-                                    <div>
+                                    <div id="isbn-exemplar">
                                         <p>{dado.isbn}</p>
                                     </div>
-                                    <div>
+                                    <div id="qtd-exemplar">
                                         <p>{dado.qtdExemplares}</p>
                                     </div>
                                     <div id="botoes">
