@@ -1,18 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 #container-listar-discentes {
-    /* width: 80%; */
     height: 90vh;
     display: flex;
     flex-direction: column;
-    /* background-color: tomato; */
-    /* justify-content: center; */
     align-items: center;
-}
-
-#quasetudo {
-    display: flex;
-    flex-direction: column;
 }
 
 #div-busca {
@@ -24,9 +16,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    /* border: none; */
     border: 2px solid #34315e;
-    /* border-color: #34315e; */
     outline: none;
 }
 #busca {
@@ -38,9 +28,10 @@
     font: 400 18px "Roboto";
 }
 
-#titulo {
-    display: flex;
-    flex-direction: row;
+#titulo-discentes {
+    display: grid;
+    grid-template-columns: 40% 25%;
+
     width: 900px;
     margin-top: 15px;
     align-items: initial;
@@ -51,18 +42,10 @@ h2 {
     font: 700 18px "Roboto";
 }
 
-#matricula {
-    margin-left: 330px;
-}
-
-ul {
-    list-style: none;
-}
-
-#info {
+#info-discentes {
     width: 900px;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 40% 25% 35%;
     background-color: #d5d6db;
     height: 30px;
     align-items: center;
@@ -71,10 +54,15 @@ ul {
     margin-bottom: 10px;
 }
 
-#nome {
-    width: 250px;
-    margin-left: 5px;
+#nome-discentes {
+    padding-left: 3px;
 }
+
+#matricula-discentes {
+    display: flex;
+    justify-content: center;
+}
+
 button {
     height: 30px;
     border: none;
@@ -84,6 +72,10 @@ button:hover {
     opacity: 0.85;
 }
 
+#botoes-discentes {
+    display: flex;
+    justify-content: end;
+}
 #editar {
     background-color: #49a1f1;
     color: white;
@@ -96,6 +88,8 @@ button:hover {
     color: white;
     width: 80px;
     font: 700 14px "Roboto";
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 #adiciona {
