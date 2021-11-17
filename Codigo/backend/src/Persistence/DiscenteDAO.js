@@ -10,16 +10,30 @@ class DiscenteDAO {
         return discentes;
     }
 
-    async cadastrarDiscente(nome, matricula, cpf) {
+    async cadastrarDiscente(discente) {
         await knex("discentes").insert({
-            nome,
-            matricula,
-            cpf,
+            nome: discente.nome,
+            matricula: discente.matricula,
+            cpf: discente.cpf,
         });
     }
 
     async alterarDadosDiscente(dados, id) {
-        await knex("discentes").update(dados).where({ id });
+        const discente = await knex("discentes")
+            .select("nome", "matricula", "cpf")
+            .where({ id })
+            .first();
+
+        await knex("discentes")
+            .update({
+                nome: dados.nome === undefined ? discente.nome : dados.nome,
+                matricula:
+                    dados.matricula === undefined
+                        ? discente.matricula
+                        : dados.matricula,
+                cpf: dados.cpf === undefined ? discente.cpf : dados.cpf,
+            })
+            .where({ id });
     }
 
     async removerDiscente(id) {
