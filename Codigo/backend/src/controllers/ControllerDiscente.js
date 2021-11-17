@@ -1,3 +1,4 @@
+const Discente = require("../Model/Discente");
 const DiscenteDAO = require("../Persistence/DiscenteDAO");
 
 class ControllerDiscente {
@@ -18,9 +19,12 @@ class ControllerDiscente {
             /* obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro */
             const { nome, matricula, cpf } = req.body;
 
+            let dados = { nome, matricula, cpf };
+
+            let discente = new Discente(dados);
             let discenteDAO = new DiscenteDAO();
 
-            await discenteDAO.cadastrarDiscente(nome, matricula, cpf);
+            await discenteDAO.cadastrarDiscente(discente);
 
             return res.status(201).send();
         } catch (error) {
@@ -34,9 +38,10 @@ class ControllerDiscente {
             const dados = req.body;
             const { id } = req.params;
 
+            let discente = new Discente(dados);
             let discenteDAO = new DiscenteDAO();
 
-            await discenteDAO.alterarDadosDiscente(dados, id);
+            await discenteDAO.alterarDadosDiscente(discente, id);
 
             return res.send();
         } catch (err) {
