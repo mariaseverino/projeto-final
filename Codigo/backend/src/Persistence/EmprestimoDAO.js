@@ -17,7 +17,7 @@ class EmprestimoDAO {
     }
 
     /* ver se o discente ja possui o livro que ele quer pegar emprestado? */
-    async cadastrarEmprestimo(dado, idExemplar) {
+    async cadastrarEmprestimo(dado) {
         const discenteExiste = await knex("discentes")
             .select("id", "numEmprestimos")
             .where({ matricula: dado.matricula })
@@ -30,7 +30,7 @@ class EmprestimoDAO {
 
         const exemplar = await knex("exemplares")
             .select("qtdExemplares", "qtdEmprestimo")
-            .where({ id: idExemplar })
+            .where({ id: dado.id })
             .first();
 
         if (exemplar.qtdExemplares < 1) {
@@ -43,7 +43,7 @@ class EmprestimoDAO {
 
         await knex("exemplares")
             .update({ qtdExemplares, qtdEmprestimo })
-            .where({ id: idExemplar });
+            .where({ id: dado.id });
 
         const dataEmprestimo = new Date();
         const dataLimite = new Date();
@@ -59,7 +59,7 @@ class EmprestimoDAO {
 
         await knex("emprestimos").insert({
             idDiscente: discenteExiste.id,
-            idExemplar,
+            idExemplar: dado.id,
             dataEmprestimo: dataEmprestimo.toJSON(),
             dataLimite: dataLimite.toJSON(),
         });

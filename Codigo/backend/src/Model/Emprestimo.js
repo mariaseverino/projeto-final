@@ -1,6 +1,7 @@
 class Emprestimo {
-    constructor(matricula) {
-        this.matricula = matricula;
+    constructor(dados) {
+        this.matricula = dados.matricula;
+        this.idExemplar = dados.id;
     }
 }
 
