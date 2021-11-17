@@ -1,3 +1,4 @@
+const Exemplar = require("../Model/Exemplar");
 const ExemplarDAO = require("../Persistence/ExemplarDAO");
 
 class ControllerExemplar {
@@ -18,15 +19,12 @@ class ControllerExemplar {
             /* obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro */
             const { nome, isbn, autor, editora, qtdExemplares } = req.body;
 
+            let dados = { nome, isbn, autor, editora, qtdExemplares };
+
+            let exemplar = new Exemplar(dados);
             let exemplarDAO = new ExemplarDAO();
 
-            await exemplarDAO.adicionarExemplar(
-                nome,
-                isbn,
-                autor,
-                editora,
-                qtdExemplares
-            );
+            await exemplarDAO.adicionarExemplar(exemplar);
 
             return res.status(201).send();
         } catch (err) {
@@ -40,9 +38,10 @@ class ControllerExemplar {
             const dados = req.body;
             const { id } = req.params;
 
+            let exemplar = new Exemplar(dados);
             let exemplarDAO = new ExemplarDAO();
 
-            await exemplarDAO.alterarDadosExemplar(dados, id);
+            await exemplarDAO.alterarDadosExemplar(exemplar, id);
 
             return res.send();
         } catch (err) {
