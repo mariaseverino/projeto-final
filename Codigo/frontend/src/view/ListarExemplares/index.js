@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { FiSearch } from "react-icons/fi";
 
 import Header from "../../components/Header";
@@ -10,6 +11,8 @@ import "../../globalStyle.css";
 
 function ListarExemplares() {
     const [exemplares, setDiscentes] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.get("exemplares").then(({ data }) => {
@@ -56,9 +59,12 @@ function ListarExemplares() {
                         ))}
                     </ul>
                 </div>
-                <div id="adiciona">
+                <button
+                    id="adiciona"
+                    onClick={() => navigate("/exemplar/cadastrar")}
+                >
                     <h1>+ Adicionar Exemplar</h1>
-                </div>
+                </button>
             </div>
         </div>
     );
