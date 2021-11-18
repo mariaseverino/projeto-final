@@ -19,7 +19,9 @@ class ControllerEmprestimo {
             const { matricula } = req.body;
             const { id } = req.params;
 
-            let emprestimo = new Emprestimo(matricula);
+            let dados = {matricula, id};
+
+            let emprestimo = new Emprestimo(dados);
 
             let emprestimoDAO = new EmprestimoDAO();
 
