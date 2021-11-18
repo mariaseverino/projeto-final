@@ -8,6 +8,7 @@ import ListarEmprestimos from "./view/ListarEmprestimos";
 import CadastrarDiscente from "./view/CadastrarDiscente";
 import CadastrarExemplares from "./view/CadastrarExemplar";
 import CadastrarEmprestimo from "./view/CadastrarEmprestimo";
+import AlterarDadosDiscente from "./view/AlterarDadosDiscente";
 
 export default function Router() {
     return (
@@ -29,6 +30,10 @@ export default function Router() {
                 <Route
                     path="/emprestimo/cadastrar"
                     element={<CadastrarEmprestimo />}
+                />
+                <Route
+                    path="/discente/alterar/:id"
+                    element={<AlterarDadosDiscente />}
                 />
             </Routes>
         </BrowserRouter>

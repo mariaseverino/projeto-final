@@ -15,7 +15,8 @@ const controllerEmprestimo = new ControllerEmprestimo();
 routes
     .get("/discentes", controllerDiscente.listar)
     .post("/discente", controllerDiscente.criar)
-    .put("/discente/:id", controllerDiscente.alterar)
+    .get("/discente/alterar/:id", controllerDiscente.alterar1)
+    .put("/discente/alterar/:id", controllerDiscente.alterar2)
     .delete("/discente/:id", controllerDiscente.remover)
 
     .get("/exemplares", controllerExemplar.listar)
