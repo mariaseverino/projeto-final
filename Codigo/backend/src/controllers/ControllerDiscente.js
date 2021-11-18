@@ -10,16 +10,14 @@ class ControllerDiscente {
 
             return res.json(dados);
         } catch (err) {
-            return res.json({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 
     async criar(req, res) {
         try {
-            /* obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro */
-            const { nome, matricula, cpf } = req.body;
-
-            let dados = { nome, matricula, cpf };
+            const dados = req.body;
+            console.log(dados);
 
             let discente = new Discente(dados);
             let discenteDAO = new DiscenteDAO();
@@ -27,14 +25,27 @@ class ControllerDiscente {
             await discenteDAO.cadastrarDiscente(discente);
 
             return res.status(201).send();
-        } catch (error) {
-            return res.json({ erro: err.message });
+        } catch (err) {
+            return res.status(400).send({ erro: err.message });
         }
     }
 
-    async alterar(req, res) {
+    async alterar1(req, res) {
         try {
-            /* basta que pelo menos 1 dado seja informado */
+            const { id } = req.params;
+
+            let discenteDAO = new DiscenteDAO();
+
+            const dados = await discenteDAO.dadosDiscente(id);
+
+            return res.json(dados);
+        } catch (err) {
+            return res.status(400).send({ erro: err.message });
+        }
+    }
+
+    async alterar2(req, res) {
+        try {
             const dados = req.body;
             const { id } = req.params;
 
@@ -45,13 +56,14 @@ class ControllerDiscente {
 
             return res.send();
         } catch (err) {
-            return res.json({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 
     async remover(req, res) {
         try {
             const { id } = req.params;
+            console.log(id);
 
             let discenteDAO = new DiscenteDAO();
 
@@ -59,7 +71,7 @@ class ControllerDiscente {
 
             return res.send();
         } catch (err) {
-            return res.json({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 }
