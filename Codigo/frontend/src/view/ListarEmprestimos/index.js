@@ -55,7 +55,7 @@ function ListarEmprestimos() {
                         {emprestimos.map((dado) => (
                             <li key={dado.id}>
                                 <div id="info-emprestimo">
-                                    <div id="titulo-emprestimo">
+                                    <div id="nome-emprestimo">
                                         <p>{dado.nome}</p>
                                     </div>
                                     <div id="isbn-emprestimo">
