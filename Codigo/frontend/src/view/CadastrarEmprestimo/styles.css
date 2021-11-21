@@ -6,8 +6,6 @@
     grid-template-columns: 50% 50%;
     margin: auto;
     align-items: center;
-    
-    
 }
 
 .imagem {
@@ -40,7 +38,7 @@ input {
 
 input::placeholder {
     color: #34315e;
-   padding: 10px;
+    padding: 10px;
 }
 
 .botao {

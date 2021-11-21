@@ -1,22 +1,51 @@
-import imagem from "../../assets/livro.svg"
-import { useNavigate } from "react-router";
+import imagem from "../../assets/livro.svg";
+import { useNavigate, useParams } from "react-router";
 
-import "./styles.css"
-import "../../globalStyle.css"
+import "./styles.css";
+import "../../globalStyle.css";
+import { useState } from "react";
+import api from "../../services/api";
 
-function CadastrarEmprestimo () {
+function CadastrarEmprestimo() {
     const navigate = useNavigate();
+
+    const [matricula, setMatricula] = useState();
+    const { id } = useParams();
+
+    async function cadastrar(e) {
+        try {
+            e.preventDefault();
+            let dados = {
+                matricula,
+            };
+
+            await api.post(`emprestimo/${id}`, dados);
+
+            navigate("/emprestimos");
+        } catch (err) {
+            alert(err.message);
+
+            setMatricula("");
+        }
+    }
+
     return (
-        <div className = "container">            
-            <form className = "formulario">
-                <div className = "inputs">
-    
-                <input type = "matricula" name = "cmatricula" placeholder = "Matricula do Aluno"/>
+        <div className="container">
+            <form className="formulario" onSubmit={cadastrar}>
+                <div className="inputs">
+                    <input
+                        placeholder="Matricula do Aluno"
+                        value={matricula}
+                        onChange={(e) => setMatricula(e.target.value)}
+                    />
                 </div>
-                <button className = "botao" onClick={() =>navigate("/home")} >Cadastrar</button>
+                <button className="botao" type="submit">
+                    Cadastrar
+                </button>
             </form>
-            <img src = {imagem} className = "imagem" />
-        </div>)
+            <img src={imagem} className="imagem" />
+        </div>
+    );
 }
 
 export default CadastrarEmprestimo;
