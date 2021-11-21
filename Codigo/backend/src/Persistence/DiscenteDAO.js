@@ -1,75 +1,63 @@
-const knex = require("../database");
+const Discente = require("../Model/Discente");
 
 class DiscenteDAO {
     async listarDiscentes() {
-        const discentes = await knex("discentes").select(
+        const discentes = await Discente.query().select(
             "id",
             "nome",
-            "matricula"
+            "matricula",
+            "numEmprestimos"
         );
         return discentes;
     }
 
     async dadosDiscente(id) {
-        const discente = await knex("discentes")
+        const discente = await Discente.query()
             .select("nome", "matricula", "cpf")
-            .where({ id })
-            .first();
+            .findById(id);
+
         return discente;
     }
 
-    async cadastrarDiscente(discente) {
-        const discentes = await knex("discentes")
+    async cadastrarDiscente(dados) {
+        let discente = await Discente.query()
             .select("id")
-            .where({ cpf: discente.cpf })
+            .where("cpf", dados.cpf)
             .first();
 
-        if (discentes != undefined) {
+        if (discente != undefined) {
             throw new Error("Discente ja existe");
         }
 
-        await knex("discentes").insert({
-            nome: discente.nome,
-            matricula: discente.matricula,
-            cpf: discente.cpf,
+        await Discente.query().insert({
+            nome: dados.nome,
+            matricula: parseInt(dados.matricula),
+            cpf: parseInt(dados.cpf),
         });
     }
 
     async alterarDadosDiscente(dados, id) {
-        const discente = await knex("discentes")
-            .select("nome", "matricula", "cpf")
-            .where({ id })
-            .first();
-
-        await knex("discentes")
+        await Discente.query()
             .update({
-                nome: dados.nome === undefined ? discente.nome : dados.nome,
-                matricula:
-                    dados.matricula === undefined
-                        ? discente.matricula
-                        : dados.matricula,
-                cpf: dados.cpf === undefined ? discente.cpf : dados.cpf,
+                nome: dados.nome,
+                matricula: parseInt(dados.matricula),
+                cpf: parseInt(dados.cpf),
             })
             .where({ id });
     }
 
     async removerDiscente(id) {
-        const discente = await knex("discentes")
-            .join("emprestimos", "discentes.id", "=", "emprestimos.idDiscente")
-            .where("status", true)
-            .select("status")
-            .first();
+        const discente = await Discente.query()
+            .where("numEmprestimos", ">", 0)
+            .findById(id);
 
-        console.log(discente);
-
-        if (discente === undefined) {
+        if (discente !== undefined) {
             throw new Error(
                 "Discente não pode ser removido, pois possui pendencias"
             );
         }
-        console.log("a", id);
-        await knex("discentes").where({ id }).del();
-        console.log("b", id);
+
+        await Discente.query().deleteById(id);
     }
 }
 
