@@ -1,8 +1,9 @@
-const knex = require("../database");
+const Exemplar = require("../Model/Exemplar");
+const Emprestimo = require("../Model/Emprestimo");
 
 class ExemplarDAO {
     async listarExemplares() {
-        const exemplares = await knex("exemplares").select(
+        const exemplares = await Exemplar.query().select(
             "id",
             "nome",
             "isbn",
@@ -10,54 +11,51 @@ class ExemplarDAO {
         );
         return exemplares;
     }
+    async dadosExemplar(id) {
+        const exemplar = await Exemplar.query()
+            .select("nome", "isbn", "autor", "editora", "qtdExemplares")
+            .findById(id);
+
+        return exemplar;
+    }
 
     async adicionarExemplar(dados) {
-        await knex("exemplares").insert({
+        await Exemplar.query().insert({
             nome: dados.nome,
-            isbn: dados.isbn,
+            isbn: parseInt(dados.isbn),
             autor: dados.autor,
             editora: dados.editora,
-            qtdExemplares: dados.qtdExemplares,
+            qtdExemplares: parseInt(dados.qtdExemplares),
         });
     }
 
     async alterarDadosExemplar(dados, id) {
-        const exemplar = await knex("exemplares")
-            .select("nome", "isbn", "autor", "editora", "qtdExemplares")
-            .where({ id })
-            .first();
-
         console.log(dados);
-        await knex("exemplares")
+        await Exemplar.query()
             .update({
-                nome: dados.nome === undefined ? exemplar.nome : dados.nome,
-                isbn: dados.isbn === undefined ? exemplar.isbn : dados.isbn,
-                autor: dados.autor === undefined ? exemplar.autor : dados.autor,
-                editora:
-                    dados.editora === undefined
-                        ? exemplar.editora
-                        : dados.editora,
-                qtdExemplares:
-                    dados.qtdExemplares === undefined
-                        ? exemplar.qtdExemplares
-                        : dados.qtdExemplares,
+                nome: dados.nome,
+                isbn: parseInt(dados.isbn),
+                autor: dados.autor,
+                editora: dados.editora,
+                qtdExemplares: parseInt(dados.qtdExemplares),
             })
             .where({ id });
     }
 
     async removerExemplar(id) {
-        const exemplar = await knex("exemplares")
-            .join("emprestimos", "exemplares.id", "=", "emprestimos.idExemplar")
-            .where("status", true)
+        const emprestimo = await Emprestimo.query()
             .select("status")
+            .where({ idExemplar: id, status: true })
             .first();
+        /* tem que retorna undefined */
+        /* se existir um exemplar ele não pde ser removido pois esta emprestado */
+        console.log(emprestimo);
 
-        console.log(exemplar);
-
-        if (exemplar !== undefined) {
+        /* se o livro nao tiver emprestado vai retornar undefined */
+        if (emprestimo !== undefined) {
             throw new Error("Exemplar não pode ser removido");
         }
-        await knex("exemplares").where({ id }).del();
+        await Exemplar.query().where({ id }).del();
     }
 }
 
