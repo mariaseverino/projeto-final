@@ -3,23 +3,26 @@
     height: 100vh;
     width: 900px;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
     margin: auto;
     align-items: center;
-    
-    
+    /* background-color: tomato; */
 }
 
 .imagem {
     /* background-color: blueviolet; */
-    height: 90vh;
+    /* height: 90vh; */
+    width: 100%;
+    /* margin-left: 20px; */
 }
 
 .formulario {
     /* background-color: dimgray; */
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-right: 60px;
 }
 
 .inputs {
@@ -40,7 +43,7 @@ input {
 
 input::placeholder {
     color: #34315e;
-   padding: 10px;
+    padding: 10px;
 }
 
 .botao {

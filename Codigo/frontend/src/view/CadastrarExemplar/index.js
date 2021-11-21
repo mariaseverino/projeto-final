@@ -1,25 +1,82 @@
-import imagem from "../../assets/estante.svg"
+import imagem from "../../assets/estante.svg";
 import { useNavigate } from "react-router";
 
-import "./styles.css"
-import "../../globalStyle.css"
+import "./styles.css";
+import "../../globalStyle.css";
+import { useState } from "react";
+import api from "../../services/api";
 
-function CadastrarExemplar () {
+function CadastrarExemplar() {
     const navigate = useNavigate();
+
+    const [nome, setNome] = useState("");
+    const [isbn, setIsbn] = useState("");
+    const [autor, setAutor] = useState("");
+    const [editora, setEditora] = useState("");
+    const [qtdExemplares, setQuantidade] = useState("");
+
+    async function cadastrar(e) {
+        try {
+            e.preventDefault();
+            let dados = {
+                nome,
+                isbn,
+                autor,
+                editora,
+                qtdExemplares,
+            };
+
+            await api.post("exemplar", dados);
+
+            navigate("/exemplares");
+        } catch (err) {
+            alert(err.message);
+
+            setNome("");
+            setIsbn("");
+            setAutor("");
+            setEditora("");
+            setQuantidade("");
+        }
+    }
+
     return (
-        <div className = "container">            
-            <form className = "formulario">
-                <div className = "inputs">
-                <input type = "nome" name = "cnome" placeholder = "Nome"/>
-                <input type = "isbn" name = "cisbn" placeholder = "ISBN"/>
-                <input type = "autor" name = "cautor" placeholder = "Autor"/>
-                <input type = "editora" name = "ceditora" placeholder = "Editora"/>
-                <input type = "quantidade" name = "cquantidade" placeholder = "Quantidade de Exemplares"/>
+        <div className="container">
+            <form className="formulario" onSubmit={cadastrar}>
+                <div className="inputs">
+                    <input
+                        placeholder="Nome"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
+                    />
+                    <input
+                        placeholder="ISBN"
+                        value={isbn}
+                        onChange={(e) => setIsbn(e.target.value)}
+                    />
+                    <input
+                        placeholder="Autor"
+                        value={autor}
+                        onChange={(e) => setAutor(e.target.value)}
+                    />
+                    <input
+                        placeholder="Editora"
+                        value={editora}
+                        onChange={(e) => setEditora(e.target.value)}
+                    />
+                    <input
+                        placeholder="Quantidade de Exemplares"
+                        value={qtdExemplares}
+                        onChange={(e) => setQuantidade(e.target.value)}
+                    />
                 </div>
-                <button className = "botao" onClick={() =>navigate("/home")} >Cadastrar</button>
+                <button className="botao" type="submit">
+                    Cadastrar
+                </button>
             </form>
-            <img src = {imagem} className = "imagem" />
-        </div>)
+            <img src={imagem} className="imagem" />
+        </div>
+    );
 }
 
 export default CadastrarExemplar;
