@@ -6,7 +6,7 @@ exports.up = function (knex) {
         table.datetime("dataEmprestimo");
         table.datetime("dataLimite");
         table.datetime("dataEntrega");
-        table.boolean("status").defaultTo(true);
+        table.boolean("status").defaultTo(false);
 
         table.foreign("idDiscente").references("id").inTable("discentes");
         table.foreign("idExemplar").references("id").inTable("exemplares");
