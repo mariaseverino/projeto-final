@@ -1,8 +1,10 @@
-const knex = require("../database");
+const Discente = require("../Model/Discente");
+const Emprestimo = require("../Model/Emprestimo");
+const Exemplar = require("../Model/Exemplar");
 
 class EmprestimoDAO {
     async listarEmprestimos() {
-        const emprestimos = await knex("emprestimos")
+        const emprestimos = await Emprestimo.query()
             .join("discentes", "emprestimos.idDiscente", "=", "discentes.id")
             .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
             .select(
@@ -10,28 +12,42 @@ class EmprestimoDAO {
                 "exemplares.nome",
                 "discentes.matricula",
                 "emprestimos.dataLimite",
-                "emprestimos.dataEntrega",
                 "emprestimos.status"
             );
+
         return emprestimos;
     }
 
     /* ver se o discente ja possui o livro que ele quer pegar emprestado? */
     async cadastrarEmprestimo(dado) {
-        const discenteExiste = await knex("discentes")
+        const discenteExiste = await Discente.query()
             .select("id", "numEmprestimos")
             .where({ matricula: dado.matricula })
             .first();
 
-        console.log(dado.matricula);
         if (discenteExiste === undefined) {
             throw new Error("Discente não encontrado");
         }
 
-        const exemplar = await knex("exemplares")
+        const exemplar = await Exemplar.query()
             .select("qtdExemplares", "qtdEmprestimo")
             .where({ id: dado.id })
             .first();
+
+        /* se esse livro existe? */
+        console.log(exemplar);
+        const emprestimoExiste = await Emprestimo.query()
+            .where({
+                idDiscente: discenteExiste.id,
+                idExemplar: dado.id,
+                status: true,
+            })
+            .first();
+
+        console.log(emprestimoExiste);
+        if (emprestimoExiste !== undefined) {
+            throw new Error("Discente já esta com esse livro emprestado");
+        }
 
         if (exemplar.qtdExemplares < 1) {
             throw new Error("Não há exemplar disponivel");
@@ -39,9 +55,9 @@ class EmprestimoDAO {
 
         let qtdExemplares = exemplar.qtdExemplares - 1;
         let qtdEmprestimo = exemplar.qtdEmprestimo + 1;
-        let numEmprestimos = exemplar.numEmprestimos + 1;
+        let numEmprestimos = discenteExiste.numEmprestimos + 1;
 
-        await knex("exemplares")
+        await Exemplar.query()
             .update({ qtdExemplares, qtdEmprestimo })
             .where({ id: dado.id });
 
@@ -50,54 +66,51 @@ class EmprestimoDAO {
 
         dataLimite.setDate(dataLimite.getDate() + 5);
 
-        await knex("discentes")
+        console.log(numEmprestimos);
+        await Discente.query()
             .update({
                 numEmprestimos,
                 ultimoEmprestimo: dataEmprestimo.toJSON(),
             })
             .where({ matricula: dado.matricula });
 
-        await knex("emprestimos").insert({
+        const novo = await Emprestimo.query().insert({
             idDiscente: discenteExiste.id,
-            idExemplar: dado.id,
+            idExemplar: parseInt(dado.id),
             dataEmprestimo: dataEmprestimo.toJSON(),
             dataLimite: dataLimite.toJSON(),
+            status: true,
         });
+        console.log("id", novo);
     }
 
     async renovarEmprestimo(id) {
-        let data = await knex("emprestimos")
-            .where({ id })
-            .select("dataLimite")
-            .first();
-
-        const exemplar = await knex("emprestimos")
+        const exemplar = await Emprestimo.query()
             .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
             .select(
+                "emprestimos.idExemplar",
+                "emprestimos.idDiscente",
                 "exemplares.qtdEmprestimo",
-                "exemplares.id",
-                "emprestimos.idDiscente"
+                "emprestimos.dataLimite"
             )
-            .where("emprestimos.id", "=", id)
+            .where("emprestimos.id", id)
             .first();
 
-        let novaqtdEmprestimo = exemplar.qtdEmprestimo + 1;
+        let qtdEmprestimo = exemplar.qtdEmprestimo + 1;
 
-        await knex("exemplares")
-            .update({ qtdEmprestimo: novaqtdEmprestimo })
-            .where({ id: exemplar.id });
+        await Exemplar.query()
+            .update({ qtdEmprestimo: qtdEmprestimo })
+            .where({ id: exemplar.idExemplar });
 
-        let novaData = new Date(data.dataLimite);
+        let novaData = new Date(exemplar.dataLimite);
 
         novaData.setDate(novaData.getDate() + 5);
 
-        await knex("discentes")
+        await Discente.query()
             .update({ ultimoEmprestimo: new Date().toJSON() })
             .where({ id: exemplar.idDiscente });
 
-        console.log(novaData.toJSON());
-
-        await knex("emprestimos")
+        await Emprestimo.query()
             .update({ dataLimite: novaData.toJSON() })
             .where({ id });
     }
@@ -105,37 +118,36 @@ class EmprestimoDAO {
     /* apos emprestimo ser finalizado tem que aumentar quantidade de livro */
     /* finalizar -> remover a */
     async finalizarEmprestimo(id) {
-        // const dataEmprestimo = new Date();
         const dataEntrega = new Date();
-        console.log(dataEntrega);
 
-        // dataEntrega.setDate(dataEntrega.getDate() + 5);
         console.log(dataEntrega.toJSON());
 
-        const emprestimo = await knex("emprestimos")
+        const emprestimo = await Emprestimo.query()
+            .join("discentes", "emprestimos.idDiscente", "=", "discentes.id")
             .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
             .select(
-                "exemplares.qtdExemplares",
-                "exemplares.id",
-                "emprestimos.idDiscente"
+                "emprestimos.id",
+                "emprestimos.idExemplar",
+                "emprestimos.idDiscente",
+                "discentes.numEmprestimos",
+                "exemplares.qtdExemplares"
             )
-            .where("emprestimos.id", "=", id)
-            .first();
-
-        console.log(emprestimo);
+            .findById(id);
 
         let qtdExemplares = emprestimo.qtdExemplares + 1;
         let numEmprestimos = emprestimo.numEmprestimos - 1;
 
-        await knex("emprestimos")
+        console.log(numEmprestimos);
+
+        await Emprestimo.query()
             .update({ dataEntrega: dataEntrega.toJSON(), status: false })
             .where({ id });
 
-        await knex("exemplares")
+        await Exemplar.query()
             .update({ qtdExemplares })
-            .where({ id: emprestimo.id });
+            .where({ id: emprestimo.idExemplar });
 
-        await knex("discentes")
+        await Discente.query()
             .update({ numEmprestimos })
             .where({ id: emprestimo.idDiscente });
     }
