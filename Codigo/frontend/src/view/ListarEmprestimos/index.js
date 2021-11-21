@@ -11,6 +11,7 @@ import { format } from "date-fns";
 
 function ListarEmprestimos() {
     const [emprestimos, setEmprestimos] = useState([]);
+    const [busca, setBusca] = useState("");
 
     /* pega dados do backend passados pela rota /emprestimos */
     useEffect(() => {
@@ -18,6 +19,15 @@ function ListarEmprestimos() {
             setEmprestimos(data);
         });
     }, []);
+
+    let emprestimosFiltrados = emprestimos.filter(
+        (emprestimo) =>
+            emprestimo.nome.toLowerCase().includes(busca.toLowerCase()) ||
+            emprestimo.matricula
+                .toString()
+                .toLowerCase()
+                .includes(busca.toLowerCase())
+    );
 
     async function devolverLivro(id) {
         try {
@@ -27,7 +37,8 @@ function ListarEmprestimos() {
                 if (emprestimo.id == id) {
                     emprestimo.status = 0;
 
-                    emprestimo.dataLimite = emprestimo.dataEntrega;
+                    emprestimo.dataLimite = new Date().toJSON().toString();
+                    // alert(new Date().toJSON().toString(),emprestimo.dataLimite);
                 }
             });
 
@@ -42,58 +53,72 @@ function ListarEmprestimos() {
             <Header />
             <div id="container-listar-emprestimos">
                 <div id="div-busca">
-                    <FiSearch size={24} color="#34315e" />
-                    <input id="busca" />
+                    <FiSearch size={24} color="#34315e" id="icon" />
+                    <input
+                        id="busca"
+                        onChange={(e) => setBusca(e.target.value)}
+                    />
                 </div>
                 <div>
                     <div id="titulo-emprestimo">
-                        <h2 id="titulo-emprestimo">Titulos</h2>
+                        <h2 id="nome-emprestimo">Titulos</h2>
                         <h2 id="isbn-emprestimo">Numero da Matricula</h2>
                         <h2 id="qtdLivros-emprestimo">Data de Devolução</h2>
                     </div>
-                    <ul>
-                        {emprestimos.map((dado) => (
-                            <li key={dado.id}>
-                                <div id="info-emprestimo">
-                                    <div id="nome-emprestimo">
-                                        <p>{dado.nome}</p>
-                                    </div>
-                                    <div id="isbn-emprestimo">
-                                        <p>{dado.matricula}</p>
-                                    </div>
-                                    <div id="qtdLivros-emprestimo">
-                                        <p>
-                                            {/* tem que mudar a data limite */}
-                                            {/* data formatada */}
-                                            {format(
-                                                new Date(dado.dataLimite),
-                                                "dd/MM/yyyy"
-                                            )}
-                                            {/* {dado.dataLimite} */}
-                                        </p>
-                                    </div>
-                                    <div id="botoes-emprestimo">
-                                        <button id="editar">Renovar</button>
-
+                    {emprestimosFiltrados.length ? (
+                        <ul>
+                            {emprestimosFiltrados.map((dado) => (
+                                <li key={dado.id}>
+                                    <div id="info-emprestimo">
+                                        <div id="nome-emprestimo">
+                                            <p>{dado.nome}</p>
+                                        </div>
+                                        <div id="isbn-emprestimo">
+                                            <p>{dado.matricula}</p>
+                                        </div>
+                                        <div id="qtdLivros-emprestimo">
+                                            <p>
+                                                {/* tem que mudar a data limite */}
+                                                {/* data formatada */}
+                                                {format(
+                                                    new Date(dado.dataLimite),
+                                                    "dd/MM/yyyy"
+                                                )}
+                                                {/* {dado.dataLimite} */}
+                                            </p>
+                                        </div>
                                         {dado.status ? (
-                                            <button
-                                                id="devolver"
-                                                onClick={() =>
-                                                    devolverLivro(dado.id)
-                                                }
-                                            >
-                                                Devolver
-                                            </button>
+                                            <div id="botoes-emprestimo">
+                                                <button id="editar">
+                                                    Renovar
+                                                </button>
+
+                                                <button
+                                                    id="devolver"
+                                                    onClick={() =>
+                                                        devolverLivro(dado.id)
+                                                    }
+                                                >
+                                                    Devolver
+                                                </button>
+                                            </div>
                                         ) : (
-                                            <button id="devolvido">
-                                                Devolvido
-                                            </button>
+                                            <div id="botoes-emprestimo">
+                                                <div id="editar2">Renovar</div>
+                                                <div id="devolvido">
+                                                    Devolvido
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <div id="conteudo">
+                            <h1>Nenhum emprestimo encontrado</h1>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
