@@ -1,4 +1,3 @@
-const Exemplar = require("../Model/Exemplar");
 const ExemplarDAO = require("../Persistence/ExemplarDAO");
 
 class ControllerExemplar {
@@ -10,42 +9,51 @@ class ControllerExemplar {
 
             return res.json(dados);
         } catch (err) {
-            return res.json({ erro: err.message });
+            return res.send({ erro: err.message });
         }
     }
 
     async criar(req, res) {
         try {
             /* obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro */
-            const { nome, isbn, autor, editora, qtdExemplares } = req.body;
-
-            let dados = { nome, isbn, autor, editora, qtdExemplares };
-
-            let exemplar = new Exemplar(dados);
+            const dados = req.body;
+            // let exemplar = new Exemplar(dados);
             let exemplarDAO = new ExemplarDAO();
 
-            await exemplarDAO.adicionarExemplar(exemplar);
+            await exemplarDAO.adicionarExemplar(dados);
 
             return res.status(201).send();
         } catch (err) {
-            return res.json({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 
-    async alterar(req, res) {
+    async alterar1(req, res) {
         try {
-            /* basta que pelo menos 1 dado seja informado */
+            const { id } = req.params;
+
+            let exemplarDAO = new ExemplarDAO();
+
+            const dados = await exemplarDAO.dadosExemplar(id);
+
+            return res.json(dados);
+        } catch (err) {
+            return res.status(400).send({ erro: err.message });
+        }
+    }
+
+    async alterar2(req, res) {
+        try {
             const dados = req.body;
             const { id } = req.params;
 
-            let exemplar = new Exemplar(dados);
             let exemplarDAO = new ExemplarDAO();
 
-            await exemplarDAO.alterarDadosExemplar(exemplar, id);
+            await exemplarDAO.alterarDadosExemplar(dados, id);
 
             return res.send();
         } catch (err) {
-            return res.json({ erro: err.message });
+            return res.send({ erro: err.message });
         }
     }
 
@@ -59,7 +67,7 @@ class ControllerExemplar {
 
             return res.send();
         } catch (err) {
-            return res.json({ erro: err.message });
+            return res.send({ erro: err.message });
         }
     }
 }

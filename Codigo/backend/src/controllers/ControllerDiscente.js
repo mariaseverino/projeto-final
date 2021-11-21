@@ -1,4 +1,3 @@
-const Discente = require("../Model/Discente");
 const DiscenteDAO = require("../Persistence/DiscenteDAO");
 
 class ControllerDiscente {
@@ -17,12 +16,10 @@ class ControllerDiscente {
     async criar(req, res) {
         try {
             const dados = req.body;
-            console.log(dados);
 
-            let discente = new Discente(dados);
             let discenteDAO = new DiscenteDAO();
 
-            await discenteDAO.cadastrarDiscente(discente);
+            await discenteDAO.cadastrarDiscente(dados);
 
             return res.status(201).send();
         } catch (err) {
@@ -49,10 +46,9 @@ class ControllerDiscente {
             const dados = req.body;
             const { id } = req.params;
 
-            let discente = new Discente(dados);
             let discenteDAO = new DiscenteDAO();
 
-            await discenteDAO.alterarDadosDiscente(discente, id);
+            await discenteDAO.alterarDadosDiscente(dados, id);
 
             return res.send();
         } catch (err) {
@@ -63,7 +59,6 @@ class ControllerDiscente {
     async remover(req, res) {
         try {
             const { id } = req.params;
-            console.log(id);
 
             let discenteDAO = new DiscenteDAO();
 
