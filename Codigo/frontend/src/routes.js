@@ -9,6 +9,7 @@ import CadastrarDiscente from "./view/CadastrarDiscente";
 import CadastrarExemplares from "./view/CadastrarExemplar";
 import CadastrarEmprestimo from "./view/CadastrarEmprestimo";
 import AlterarDadosDiscente from "./view/AlterarDadosDiscente";
+import AlterarDadosExemplar from "./view/AlterarDadosExemplar";
 
 export default function Router() {
     return (
@@ -28,12 +29,16 @@ export default function Router() {
                     element={<CadastrarExemplares />}
                 />
                 <Route
-                    path="/emprestimo/cadastrar"
+                    path="/emprestimo/cadastrar/:id"
                     element={<CadastrarEmprestimo />}
                 />
                 <Route
                     path="/discente/alterar/:id"
                     element={<AlterarDadosDiscente />}
+                />
+                <Route
+                    path="/exemplar/alterar/:id"
+                    element={<AlterarDadosExemplar />}
                 />
             </Routes>
         </BrowserRouter>
