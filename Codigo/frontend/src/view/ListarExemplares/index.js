@@ -8,17 +8,28 @@ import api from "../../services/api";
 import "./style.css";
 
 import "../../globalStyle.css";
+import { Link } from "react-router-dom";
 
 function ListarExemplares() {
-    const [exemplares, setDiscentes] = useState([]);
+    const [exemplares, setExemplares] = useState([]);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         api.get("exemplares").then(({ data }) => {
-            setDiscentes(data);
+            setExemplares(data);
         });
     }, []);
+
+    async function remover(id) {
+        try {
+            await api.delete(`exemplar/${id}`);
+
+            setExemplares(exemplares.filter((exemplar) => exemplar.id != id));
+        } catch (error) {
+            alert(error.message);
+        }
+    }
 
     return (
         <div>
@@ -48,11 +59,24 @@ function ListarExemplares() {
                                         <p>{dado.qtdExemplares}</p>
                                     </div>
                                     <div id="botoes">
-                                        <button id="editar">Editar</button>
-                                        <button id="remover">Remover</button>
-                                        <button id="emprestar">
-                                            Emprestar
+                                        <Link
+                                            to={`/exemplar/alterar/${dado.id}`}
+                                        >
+                                            <button id="editar">Editar</button>
+                                        </Link>
+                                        <button
+                                            id="remover"
+                                            onClick={() => remover(dado.id)}
+                                        >
+                                            Remover
                                         </button>
+                                        <Link
+                                            to={`/emprestimo/cadastrar/${dado.id}`}
+                                        >
+                                            <button id="emprestar">
+                                                Emprestar
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </li>
