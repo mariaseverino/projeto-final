@@ -21,7 +21,8 @@ routes
 
     .get("/exemplares", controllerExemplar.listar)
     .post("/exemplar", controllerExemplar.criar)
-    .put("/exemplar/:id", controllerExemplar.alterar)
+    .get("/exemplar/alterar/:id", controllerExemplar.alterar1)
+    .put("/exemplar/alterar/:id", controllerExemplar.alterar2)
     .delete("/exemplar/:id", controllerExemplar.remover)
 
     .get("/emprestimos", controllerEmprestimo.listar)
