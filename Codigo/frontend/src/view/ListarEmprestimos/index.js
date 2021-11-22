@@ -48,6 +48,23 @@ function ListarEmprestimos() {
         }
     }
 
+    async function renovarEmprestimo(id) {
+        try {
+            await api.put(`emprestimo/${id}`);
+
+            emprestimos.map((emprestimo) => {
+                if (emprestimo.id == id) {
+                    let novaData = new Date (emprestimo.dataLimite);
+                    emprestimo.dataLimite = novaData.setDate(novaData.getDate() + 5);
+                }
+            });
+
+            setEmprestimos([...emprestimos]);
+        } catch (err) {
+            alert(`erro ao renovar ${id}, ${err.message}`);
+        }
+    }
+
     return (
         <div>
             <Header />
@@ -89,7 +106,10 @@ function ListarEmprestimos() {
                                         </div>
                                         {dado.status ? (
                                             <div id="botoes-emprestimo">
-                                                <button id="editar">
+                                                <button id="editar" onClick={() =>
+                                                        renovarEmprestimo(dado.id)
+                                                    }
+                                                >
                                                     Renovar
                                                 </button>
 
