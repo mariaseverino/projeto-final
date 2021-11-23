@@ -37,7 +37,7 @@ function ListarDiscentes() {
 
             setDiscentes(discentes.filter((discente) => discente.id != id));
         } catch (error) {
-            alert(error.message);
+            alert("Discente possui pendência de empréstimo");
         }
     }
 
