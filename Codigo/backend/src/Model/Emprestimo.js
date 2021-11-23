@@ -14,7 +14,6 @@ class Emprestimo extends Model {
     static get jsonSchema() {
         return {
             type: "object",
-            /* required: ["id"], */
             properties: {
                 id: { type: "integer" },
                 idDiscente: { type: "integer" },
@@ -23,27 +22,6 @@ class Emprestimo extends Model {
                 dataLimite: { type: "string" },
                 dataEntrega: { type: "string" },
                 status: { type: "boolean" },
-            },
-        };
-    }
-
-    static get relationMappings() {
-        return {
-            discentes: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: Discente,
-                join: {
-                    from: "emprestimos.idDiscente",
-                    to: "discentes.id",
-                },
-            },
-            exemplares: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: Exemplar,
-                join: {
-                    from: "emprestimos.idExemplar",
-                    to: "exemplares.id",
-                },
             },
         };
     }

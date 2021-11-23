@@ -11,7 +11,6 @@ class Exemplar extends Model {
     static get jsonSchema() {
         return {
             type: "object",
-            /* required: ["nome", "isbn", "autor", "editora", "qtdExemplares"], */
             properties: {
                 id: { type: "integer" },
                 nome: { type: "string" },

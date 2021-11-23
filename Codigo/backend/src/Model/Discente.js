@@ -12,7 +12,6 @@ class Discente extends Model {
     static get jsonSchema() {
         return {
             type: "object",
-            /* required: ["nome", "matricula", "cpf"], */
             properties: {
                 id: { type: "integer" },
                 nome: { type: "string" },
@@ -20,19 +19,6 @@ class Discente extends Model {
                 cpf: { type: "integer" },
                 numEmprestimos: { type: "integer" },
                 ultimoEmprestimo: { type: "string" },
-            },
-        };
-    }
-
-    static get relationMappings() {
-        return {
-            emprestimos: {
-                relation: Model.HasManyRelation,
-                modelClass: Emprestimo,
-                join: {
-                    from: "discentes.id",
-                    to: "emprestimos.idDiscente",
-                },
             },
         };
     }
