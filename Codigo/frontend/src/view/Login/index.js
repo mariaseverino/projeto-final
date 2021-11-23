@@ -21,7 +21,7 @@ function Login() {
             };
 
             await api.post("/", dados).then((res) => {
-                localStorage.setItem("atendente-id", res.data.atendente.id);
+                localStorage.setItem("atendente-id", res.data.atendente);
                 navigate("/home");
             });
         } catch (err) {
