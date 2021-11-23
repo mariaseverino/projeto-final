@@ -53,9 +53,11 @@ class ExemplarDAO {
 
         /* se o livro nao tiver emprestado vai retornar undefined */
         if (emprestimo !== undefined) {
+            console.log("nao removeu");
             throw new Error("Exemplar não pode ser removido");
         }
-        await Exemplar.query().where({ id }).del();
+        // await Exemplar.query().where({ id }).del();
+        await Exemplar.query().deleteById(id);
     }
 }
 
