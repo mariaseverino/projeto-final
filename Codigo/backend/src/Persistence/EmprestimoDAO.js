@@ -36,7 +36,6 @@ class EmprestimoDAO {
             .first();
 
         /* se esse livro existe? */
-        console.log(exemplar);
         const emprestimoExiste = await Emprestimo.query()
             .where({
                 idDiscente: discenteExiste.id,
@@ -45,7 +44,6 @@ class EmprestimoDAO {
             })
             .first();
 
-        console.log(emprestimoExiste);
         if (emprestimoExiste !== undefined) {
             throw new Error("Discente já esta com esse livro emprestado");
         }
@@ -67,7 +65,6 @@ class EmprestimoDAO {
 
         dataLimite.setDate(dataLimite.getDate() + 5);
 
-        console.log(numEmprestimos);
         await Discente.query()
             .update({
                 numEmprestimos,
@@ -82,7 +79,6 @@ class EmprestimoDAO {
             dataLimite: dataLimite.toJSON(),
             status: true,
         });
-        console.log("id", novo);
     }
 
     async renovarEmprestimo(id) {
@@ -121,10 +117,7 @@ class EmprestimoDAO {
     async finalizarEmprestimo(id) {
         const dataEntrega = new Date();
 
-        console.log(dataEntrega.toJSON());
-
         const emprestimo = await Emprestimo.query()
-            .join("discentes", "emprestimos.idDiscente", "=", "discentes.id")
             .join("exemplares", "emprestimos.idExemplar", "=", "exemplares.id")
             .select(
                 "emprestimos.id",
@@ -136,11 +129,7 @@ class EmprestimoDAO {
             .findById(id);
 
         let qtdExemplares = emprestimo.qtdExemplares + 1;
-        // let numEmprestimos = emprestimo.numEmprestimos - 1;
 
-        // console.log(numEmprestimos);
-
-        console.log(dataEntrega.toJSON());
         await Emprestimo.query()
             .update({
                 dataEntrega: dataEntrega.toJSON(),
@@ -152,18 +141,12 @@ class EmprestimoDAO {
         await Exemplar.query()
             .update({ qtdExemplares })
             .where({ id: emprestimo.idExemplar });
-
-        // await Discente.query()
-        //     .update({ numEmprestimos })
-        //     .where({ id: emprestimo.idDiscente });
     }
 
     async removerEmprestimo(dados) {
         const atendenteAdm = await Atendente.query()
             .where({ adm: true })
             .findById(dados.idAtendente);
-
-        console.log(atendenteAdm);
 
         if (atendenteAdm === undefined) {
             throw new Error("Apenas o atendente adm pode remover emprestimo2");
@@ -176,8 +159,6 @@ class EmprestimoDAO {
                 "discentes.numEmprestimos"
             )
             .findById(dados.id);
-
-        console.log(emprestimo);
 
         let numEmprestimos = emprestimo.numEmprestimos - 1;
 
