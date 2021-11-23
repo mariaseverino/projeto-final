@@ -25,7 +25,7 @@ function CadastrarEmprestimo() {
         } catch (err) {
             alert(err.message);
 
-            setMatricula("");
+            // setMatricula("");
         }
     }
 
