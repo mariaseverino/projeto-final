@@ -1,26 +1,59 @@
-import imagem from "../../assets/menina-livros.svg"
+import imagem from "../../assets/menina-livros.svg";
 import { useNavigate } from "react-router";
 
-import "./styles.css"
-import "../../globalStyle.css"
+import "./styles.css";
+import "../../globalStyle.css";
+import api from "../../services/api";
+import { useState } from "react";
 
-function Login () {
+function Login() {
     const navigate = useNavigate();
-    return (
-        <div className = "container">
-            <img src = {imagem} className = "imagem" />
 
-            
-            <form className = "formulario">
-                <div className = "inputs">
-                    <input type = "email" name = "cemail" placeholder = "E-mail" 
-                     onChange = {() => {}}/>
-                    <input type = "passaword" name = "csenha" placeholder = "Senha" 
-                     onChange = {() => {}}/>
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
+    async function registrar(e) {
+        try {
+            e.preventDefault();
+            let dados = {
+                email,
+                senha,
+            };
+
+            await api.post("/", dados).then((res) => {
+                localStorage.setItem("atendente-id", res.data.atendente.id);
+                navigate("/home");
+            });
+        } catch (err) {
+            alert("Email ou senha incorreto!");
+        }
+    }
+
+    return (
+        <div className="container">
+            <img src={imagem} className="imagem" />
+
+            <form className="formulario" onSubmit={registrar}>
+                <div className="inputs">
+                    <input
+                        type="email"
+                        placeholder="E-mail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="passaword"
+                        placeholder="Senha"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                    />
                 </div>
-                <button className = "botao" onClick={() =>navigate("/home")} >ENTRAR</button>
+                <button className="botao" type="submit">
+                    ENTRAR
+                </button>
             </form>
-        </div>)
+        </div>
+    );
 }
 
 export default Login;
