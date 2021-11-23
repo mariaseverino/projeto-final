@@ -9,7 +9,7 @@ class ControllerEmprestimo {
 
             return res.json(dados);
         } catch (error) {
-            return res.send({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 
@@ -26,7 +26,7 @@ class ControllerEmprestimo {
 
             return res.send();
         } catch (err) {
-            return res.send({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
     async renovar(req, res) {
@@ -39,7 +39,7 @@ class ControllerEmprestimo {
 
             return res.send();
         } catch (err) {
-            return res.send({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 
@@ -53,7 +53,22 @@ class ControllerEmprestimo {
 
             return res.send();
         } catch (err) {
-            return res.send({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
+        }
+    }
+    async remover(req, res) {
+        try {
+            const { id, idAtendente } = req.params;
+
+            const dados = { id, idAtendente };
+
+            let emprestimoDAO = new EmprestimoDAO();
+
+            await emprestimoDAO.removerEmprestimo(dados);
+
+            return res.send();
+        } catch (err) {
+            return res.status(400).send({ erro: err.message });
         }
     }
 }

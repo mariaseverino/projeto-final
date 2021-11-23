@@ -1,3 +1,4 @@
+const Atendente = require("../Model/Atendente");
 const Discente = require("../Model/Discente");
 const Emprestimo = require("../Model/Emprestimo");
 const Exemplar = require("../Model/Exemplar");
@@ -135,21 +136,56 @@ class EmprestimoDAO {
             .findById(id);
 
         let qtdExemplares = emprestimo.qtdExemplares + 1;
-        let numEmprestimos = emprestimo.numEmprestimos - 1;
+        // let numEmprestimos = emprestimo.numEmprestimos - 1;
 
-        console.log(numEmprestimos);
+        // console.log(numEmprestimos);
 
+        console.log(dataEntrega.toJSON());
         await Emprestimo.query()
-            .update({ dataEntrega: dataEntrega.toJSON(), status: false })
+            .update({
+                dataEntrega: dataEntrega.toJSON(),
+                dataLimite: new Date().toJSON(),
+                status: false,
+            })
             .where({ id });
 
         await Exemplar.query()
             .update({ qtdExemplares })
             .where({ id: emprestimo.idExemplar });
 
+        // await Discente.query()
+        //     .update({ numEmprestimos })
+        //     .where({ id: emprestimo.idDiscente });
+    }
+
+    async removerEmprestimo(dados) {
+        const atendenteAdm = await Atendente.query()
+            .where({ adm: true })
+            .findById(dados.idAtendente);
+
+        console.log(atendenteAdm);
+
+        if (atendenteAdm === undefined) {
+            throw new Error("Apenas o atendente adm pode remover emprestimo2");
+        }
+        const emprestimo = await Emprestimo.query()
+            .join("discentes", "emprestimos.idDiscente", "=", "discentes.id")
+            .select(
+                "emprestimos.id",
+                "emprestimos.idDiscente",
+                "discentes.numEmprestimos"
+            )
+            .findById(dados.id);
+
+        console.log(emprestimo);
+
+        let numEmprestimos = emprestimo.numEmprestimos - 1;
+
         await Discente.query()
             .update({ numEmprestimos })
             .where({ id: emprestimo.idDiscente });
+
+        await Emprestimo.query().deleteById(dados.id);
     }
 }
 
