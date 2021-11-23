@@ -24,8 +24,6 @@ function CadastrarEmprestimo() {
             navigate("/emprestimos");
         } catch (err) {
             alert(err.message);
-
-            setMatricula("");
         }
     }
 
@@ -37,6 +35,7 @@ function CadastrarEmprestimo() {
                         placeholder="Matricula do Aluno"
                         value={matricula}
                         onChange={(e) => setMatricula(e.target.value)}
+                        pattern="^[0-9]{9}$" title="Digite os 9 dígitos da matrícula " maxLength = "9" required
                     />
                 </div>
                 <button className="botao" type="submit">
