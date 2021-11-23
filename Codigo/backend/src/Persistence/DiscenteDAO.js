@@ -51,6 +51,7 @@ class DiscenteDAO {
             .where("numEmprestimos", ">", 0)
             .findById(id);
 
+        console.log(discente);
         if (discente !== undefined) {
             throw new Error(
                 "Discente não pode ser removido, pois possui pendencias"
