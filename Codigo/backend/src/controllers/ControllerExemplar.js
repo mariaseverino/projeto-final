@@ -9,15 +9,14 @@ class ControllerExemplar {
 
             return res.json(dados);
         } catch (err) {
-            return res.send({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 
     async criar(req, res) {
         try {
-            /* obriga que todos os dados do formulario seja informado, caso contrario ocorrera erro */
             const dados = req.body;
-            // let exemplar = new Exemplar(dados);
+
             let exemplarDAO = new ExemplarDAO();
 
             await exemplarDAO.adicionarExemplar(dados);
@@ -53,7 +52,7 @@ class ControllerExemplar {
 
             return res.send();
         } catch (err) {
-            return res.send({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 
@@ -67,7 +66,7 @@ class ControllerExemplar {
 
             return res.send();
         } catch (err) {
-            return res.send({ erro: err.message });
+            return res.status(400).send({ erro: err.message });
         }
     }
 }
