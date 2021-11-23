@@ -29,9 +29,16 @@ O sistema implementado tem o objetivo de ajudar na organização de uma bibliote
 
 ## :rocket: Tecnologias
 
--   Node
--   React
--   MySql
+-   Node - `v14.17.0`
+-   React - `v17.0.2`
+-   SQLite - `v5.0.2`
+-   Knex - `v0.95.13`
+-   Objection - `v3.0.0`
+-   Express - `v4.17.1`
+-   Nodemon - `v2.0.14`
+-   Bcryptjs - `v2.4.3`
+-   Axios - `v0.24.0`
+-   Date-fns - `v2.25.0`
 
 ## :open_file_folder: Estrutura de diretórios
 
@@ -64,6 +71,21 @@ $ cd projeto-final
 ```bash
 # Acesse a pasta do backend
 $ cd Codigo/backend
+
+# Instale as dependências
+$ npm install
+
+# Execute a aplicação
+$ npm start
+
+# Rodando em http://localhost:3333
+```
+
+### :game_die: Frontend
+
+```bash
+# Acesse a pasta do frontend
+$ cd Codigo/frontend
 
 # Instale as dependências
 $ npm install
