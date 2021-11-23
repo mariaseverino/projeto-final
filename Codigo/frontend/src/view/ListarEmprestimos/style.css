@@ -77,7 +77,7 @@ button:hover {
 }
 
 #editar2 {
-    background-color: #f06c6c;
+    background-color: #f14949;
     color: white;
     width: 75px;
     height: 30px;
@@ -85,6 +85,8 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 #devolvido {
@@ -93,8 +95,6 @@ button:hover {
     width: 80px;
     height: 30px;
     font: 700 14px "Roboto";
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
