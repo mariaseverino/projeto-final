@@ -13,7 +13,6 @@ function ListarEmprestimos() {
     const [emprestimos, setEmprestimos] = useState([]);
     const [busca, setBusca] = useState("");
 
-    /* pega dados do backend passados pela rota /emprestimos */
     useEffect(() => {
         api.get("emprestimos").then(({ data }) => {
             setEmprestimos(data);
@@ -30,39 +29,57 @@ function ListarEmprestimos() {
     );
 
     async function devolverLivro(id) {
-        try {
-            await api.put(`emprestimo/finalizar/${id}`);
+        await api
+            .put(`emprestimo/finalizar/${id}`)
+            .then(() => {
+                emprestimos.map((emprestimo) => {
+                    if (emprestimo.id == id) {
+                        emprestimo.status = 0;
 
-            emprestimos.map((emprestimo) => {
-                if (emprestimo.id == id) {
-                    emprestimo.status = 0;
+                        emprestimo.dataLimite = new Date().toJSON().toString();
+                    }
+                });
 
-                    emprestimo.dataLimite = new Date().toJSON().toString();
-                    // alert(new Date().toJSON().toString(),emprestimo.dataLimite);
-                }
+                setEmprestimos([...emprestimos]);
+            })
+            .catch((err) => {
+                alert("Erro ao finalizar devolução");
             });
+    }
 
-            setEmprestimos([...emprestimos]);
-        } catch (err) {
-            alert(`erro ao deletar ${id}, ${err.message}`);
-        }
+    async function removerEmprestimo(id) {
+        let idAtendente = localStorage.getItem("atendente-id");
+
+        await api
+            .delete(`emprestimo/${id}/${parseInt(idAtendente)}`)
+            .then(() => {
+                setEmprestimos(
+                    emprestimos.filter((emprestimo) => emprestimo.id != id)
+                );
+            })
+            .catch((err) => {
+                alert("Apenas o atendente adm pode remover emprestimo");
+            });
     }
 
     async function renovarEmprestimo(id) {
-        try {
-            await api.put(`emprestimo/${id}`);
+        await api
+            .put(`emprestimo/${id}`)
+            .then(() => {
+                emprestimos.map((emprestimo) => {
+                    if (emprestimo.id == id) {
+                        let novaData = new Date(emprestimo.dataLimite);
+                        emprestimo.dataLimite = novaData.setDate(
+                            novaData.getDate() + 5
+                        );
+                    }
+                });
 
-            emprestimos.map((emprestimo) => {
-                if (emprestimo.id == id) {
-                    let novaData = new Date (emprestimo.dataLimite);
-                    emprestimo.dataLimite = novaData.setDate(novaData.getDate() + 5);
-                }
+                setEmprestimos([...emprestimos]);
+            })
+            .catch((err) => {
+                alert("Não foi possivel renovar emprestimo");
             });
-
-            setEmprestimos([...emprestimos]);
-        } catch (err) {
-            alert(`erro ao renovar ${id}, ${err.message}`);
-        }
     }
 
     return (
@@ -106,8 +123,12 @@ function ListarEmprestimos() {
                                         </div>
                                         {dado.status ? (
                                             <div id="botoes-emprestimo">
-                                                <button id="editar" onClick={() =>
-                                                        renovarEmprestimo(dado.id)
+                                                <button
+                                                    id="editar"
+                                                    onClick={() =>
+                                                        renovarEmprestimo(
+                                                            dado.id
+                                                        )
                                                     }
                                                 >
                                                     Renovar
@@ -124,10 +145,19 @@ function ListarEmprestimos() {
                                             </div>
                                         ) : (
                                             <div id="botoes-emprestimo">
-                                                <div id="editar2">Renovar</div>
                                                 <div id="devolvido">
                                                     Devolvido
                                                 </div>
+                                                <button
+                                                    id="editar2"
+                                                    onClick={() =>
+                                                        removerEmprestimo(
+                                                            dado.id
+                                                        )
+                                                    }
+                                                >
+                                                    Remover
+                                                </button>
                                             </div>
                                         )}
                                     </div>
