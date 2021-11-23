@@ -16,28 +16,23 @@ function CadastrarExemplar() {
     const [qtdExemplares, setQuantidade] = useState("");
 
     async function cadastrar(e) {
-        try {
-            e.preventDefault();
-            let dados = {
-                nome,
-                isbn,
-                autor,
-                editora,
-                qtdExemplares,
-            };
+        e.preventDefault();
+        let dados = {
+            nome,
+            isbn,
+            autor,
+            editora,
+            qtdExemplares,
+        };
 
-            await api.post("exemplar", dados);
-
-            navigate("/exemplares");
-        } catch (err) {
-            alert(err.message);
-
-            setNome("");
-            setIsbn("");
-            setAutor("");
-            setEditora("");
-            setQuantidade("");
-        }
+        await api
+            .post("exemplar", dados)
+            .then(() => {
+                navigate("/exemplares");
+            })
+            .catch((err) => {
+                alert("Insira as informações corretamente");
+            });
     }
 
     return (
