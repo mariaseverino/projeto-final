@@ -25,20 +25,22 @@ function ListarExemplares() {
     let exemplaresFiltrados = exemplares.filter(
         (exemplar) =>
             exemplar.nome.toLowerCase().includes(busca.toLowerCase()) ||
-            exemplar.isbn
-                .toString()
-                .toLowerCase()
-                .includes(busca.toLowerCase())
+            exemplar.isbn.toString().toLowerCase().includes(busca.toLowerCase())
     );
 
     async function remover(id) {
-        try {
-            await api.delete(`exemplar/${id}`);
-
-            setExemplares(exemplares.filter((exemplar) => exemplar.id != id));
-        } catch (error) {
-            alert(error.message);
-        }
+        await api
+            .delete(`exemplar/${id}`)
+            .then(() => {
+                setExemplares(
+                    exemplares.filter((exemplar) => exemplar.id != id)
+                );
+            })
+            .catch((err) => {
+                alert(
+                    "Não é possivel remover exemplares que estejam emprestados"
+                );
+            });
     }
 
     return (
@@ -47,7 +49,9 @@ function ListarExemplares() {
             <div id="container-listar-exemplares">
                 <div id="div-busca">
                     <FiSearch size={24} color="#34315e" id="icon" />
-                    <input id="busca" onChange={(e) => setBusca(e.target.value)}
+                    <input
+                        id="busca"
+                        onChange={(e) => setBusca(e.target.value)}
                     />
                 </div>
                 <div>
@@ -74,7 +78,9 @@ function ListarExemplares() {
                                             <Link
                                                 to={`/exemplar/alterar/${dado.id}`}
                                             >
-                                                <button id="editar">Editar</button>
+                                                <button id="editar">
+                                                    Editar
+                                                </button>
                                             </Link>
                                             <button
                                                 id="remover-exemplar"
