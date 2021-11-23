@@ -19,7 +19,7 @@ function Home() {
         <div id="home">
             <div id="home-header">
                 <button id="icon-sair">
-                    <FiLogOut size={36} color="#00000" onClick={sair} />
+                    <FiLogOut size={28} color="#00000" onClick={sair} />
                 </button>
             </div>
             <div id="home-container">
