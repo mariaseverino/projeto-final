@@ -1,28 +1,21 @@
 .container {
-    /* background-color: black; */
-    height: 100vh;
+    height:90vh;
     width: 900px;
     display: grid;
-    grid-template-columns: 40% 60%;
-    margin: auto;
+    grid-template-columns: 50% 50%;
     align-items: center;
-    /* background-color: tomato; */
 }
 
 .imagem {
-    /* background-color: blueviolet; */
-    /* height: 90vh; */
-    width: 100%;
-    /* margin-left: 20px; */
+    height: 70vh;
+    margin-left: 30px;
 }
 
 .formulario {
-    /* background-color: dimgray; */
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 60px;
+    margin-left: 70px;
 }
 
 .inputs {
@@ -31,19 +24,18 @@
     align-items: center;
 }
 
-input {
+.input {
     width: 400px;
     height: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 2px solid #34315e;
     border-radius: 5px;
     outline: none;
     font-size: 16px;
 }
 
-input::placeholder {
+.input::placeholder {
     color: #34315e;
-    padding: 10px;
 }
 
 .botao {

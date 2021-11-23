@@ -54,16 +54,19 @@ function AlterarDadosDiscente() {
                         placeholder="Nome Completo"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
+                        pattern="^[a-zA-Z]{1,50}$" title="Digite de 1 a 50 caracteres para compor o nome" maxLength="50" required
                     />
                     <input
                         placeholder="Número de Matrícula"
                         value={matricula}
                         onChange={(e) => setMatricula(e.target.value)}
+                        pattern="^[0-9]{9}$" title="Digite os 9 dígitos da matrícula " maxLength = "9" required
                     />
                     <input
                         placeholder="CPF"
                         value={cpf}
                         onChange={(e) => setCpf(e.target.value)}
+                        pattern="^[0-9]{11}$" title="Digite os 11 dígitos da do cpf sem pontos, espaços e barras" maxLength = "11" required
                     />
                 </div>
                 <button className="botao" type="submit">

@@ -15,10 +15,10 @@ function Header() {
     return (
         <div id="container-header">
             <button id="icon-header" onClick={voltar}>
-                <FiArrowLeft size={36} color="#00000" />
+                <FiArrowLeft size={24} color="#00000" />
             </button>
             <button id="icon-header" onClick={sair}>
-                <FiLogOut size={36} color="#00000" />
+                <FiLogOut size={24} color="#00000" />
             </button>
         </div>
     );
