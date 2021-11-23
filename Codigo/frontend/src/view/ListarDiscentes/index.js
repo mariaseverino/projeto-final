@@ -32,13 +32,14 @@ function ListarDiscentes() {
     );
 
     async function remover(id) {
-        try {
-            await api.delete(`discente/${id}`);
-
-            setDiscentes(discentes.filter((discente) => discente.id != id));
-        } catch (error) {
-            alert(error.message);
-        }
+        await api
+            .delete(`discente/${id}`)
+            .then(() => {
+                setDiscentes(discentes.filter((discente) => discente.id != id));
+            })
+            .catch((err) => {
+                alert("Discente não pode ser removido, pois possui pendencias");
+            });
     }
 
     return (
@@ -47,7 +48,10 @@ function ListarDiscentes() {
             <div id="container-listar-discentes">
                 <div id="div-busca">
                     <FiSearch size={24} color="#34315e" id="icon" />
-                    <input id="busca" onChange={(e) => setBusca(e.target.value)}/>
+                    <input
+                        id="busca"
+                        onChange={(e) => setBusca(e.target.value)}
+                    />
                 </div>
                 <div>
                     <div id="titulo-discentes">
@@ -69,7 +73,9 @@ function ListarDiscentes() {
                                             <Link
                                                 to={`/discente/alterar/${dado.id}`}
                                             >
-                                                <button id="editar">Editar</button>
+                                                <button id="editar">
+                                                    Editar
+                                                </button>
                                             </Link>
                                             <button
                                                 id="remover-discente"
