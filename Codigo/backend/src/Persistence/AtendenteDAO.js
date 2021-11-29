@@ -18,7 +18,6 @@ class AtendenteDAO {
             .where({ email: dados.email })
             .first();
 
-        console.log("teste", dados);
         if (atendenteExiste !== undefined) {
             throw new Error("Atendente já existe");
         }
