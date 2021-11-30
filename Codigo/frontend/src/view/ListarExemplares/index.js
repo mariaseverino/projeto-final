@@ -33,7 +33,7 @@ function ListarExemplares() {
             .delete(`exemplar/${id}`)
             .then(() => {
                 setExemplares(
-                    exemplares.filter((exemplar) => exemplar.id != id)
+                    exemplares.filter((exemplar) => exemplar.id !== id)
                 );
                 alert(
                     "Exemplar removido com sucesso"
