@@ -27,7 +27,7 @@ function CadastrarDiscente() {
 
             navigate("/discentes");
         } catch (err) {
-            alert("Já existe discente com dado informado");
+            alert("Discente já possui cadastro no sistema");
         }
     }
     return (

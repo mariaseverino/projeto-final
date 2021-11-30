@@ -29,6 +29,7 @@ function CadastrarExemplar() {
         await api
             .post("exemplar", dados)
             .then(() => {
+                alert("Exemplar cadastrado com sucesso");
                 navigate("/exemplares");
             })
             .catch((err) => {

@@ -36,9 +36,11 @@ function AlterarDadosDiscente() {
             };
             await api.put(`discente/alterar/${id}`, dados);
 
+            alert("Discente alterado com sucesso");
+            
             navigate("/discentes");
         } catch (err) {
-            alert(err.message);
+            alert("Discente já possui cadastro no sistema");
 
             setNome(discente.nome);
             setMatricula(discente.matricula);

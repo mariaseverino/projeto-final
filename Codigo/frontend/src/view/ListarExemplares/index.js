@@ -35,6 +35,9 @@ function ListarExemplares() {
                 setExemplares(
                     exemplares.filter((exemplar) => exemplar.id !== id)
                 );
+                alert(
+                    "Exemplar removido com sucesso"
+                );
             })
             .catch((err) => {
                 alert(

@@ -40,9 +40,11 @@ function AlterarDadosExemplar() {
             };
             await api.put(`exemplar/alterar/${id}`, dados);
 
+            alert("Exemplar alterado com sucesso");
+
             navigate("/exemplares");
         } catch (err) {
-            alert(err.message);
+            alert("Exemplar já possui cadastro no sistema");
 
             setNome(nome);
             setIsbn(isbn);
