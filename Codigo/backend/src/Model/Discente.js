@@ -1,6 +1,5 @@
 const { Model } = require("objection");
 const connection = require("../database");
-const Emprestimo = require("./Emprestimo");
 
 Model.knex(connection);
 
