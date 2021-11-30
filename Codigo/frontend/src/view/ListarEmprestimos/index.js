@@ -38,6 +38,7 @@ function ListarEmprestimos() {
 
                         emprestimo.dataLimite = new Date().toJSON().toString();
                     }
+                    alert("Empréstimo Finalizado com sucesso");
                 });
 
                 setEmprestimos([...emprestimos]);
@@ -56,6 +57,7 @@ function ListarEmprestimos() {
                 setEmprestimos(
                     emprestimos.filter((emprestimo) => emprestimo.id != id)
                 );
+                alert("Empréstimo removido com sucesso");
             })
             .catch((err) => {
                 alert("Apenas o atendente adm pode remover emprestimo");
@@ -75,6 +77,7 @@ function ListarEmprestimos() {
                     }
                 });
 
+                alert("Emprestimo renovado com sucesso");
                 setEmprestimos([...emprestimos]);
             })
             .catch((err) => {
