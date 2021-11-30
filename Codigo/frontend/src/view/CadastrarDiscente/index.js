@@ -23,10 +23,11 @@ function CadastrarDiscente() {
                 cpf,
             };
             await api.post("discente", dados);
+            alert("Discente cadastrado com sucesso");
 
             navigate("/discentes");
         } catch (err) {
-            alert(err.message);
+            alert("Já existe discente com dado informado");
         }
     }
     return (
