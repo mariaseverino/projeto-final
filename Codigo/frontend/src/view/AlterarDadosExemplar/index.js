@@ -65,7 +65,6 @@ function AlterarDadosExemplar() {
                     />
                     <input
                         placeholder="ISBN"
-                        type="number"
                         value={isbn}
                         onChange={(e) => setIsbn(e.target.value)}
                         pattern="^[0-9]{13}$" title="Digite os 13 dígitos do ISBN" maxLength = "13" required
