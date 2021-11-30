@@ -20,10 +20,10 @@ function CadastrarEmprestimo() {
             };
 
             await api.post(`emprestimo/${id}`, dados);
-
+            alert("Empréstimo cadastrado com sucesso");
             navigate("/emprestimos");
         } catch (err) {
-            alert(err.message);
+            alert("Matrícula inexistente");
         }
     }
 
