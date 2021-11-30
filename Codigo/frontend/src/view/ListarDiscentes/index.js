@@ -36,6 +36,7 @@ function ListarDiscentes() {
             .delete(`discente/${id}`)
             .then(() => {
                 setDiscentes(discentes.filter((discente) => discente.id != id));
+                alert("Discente removido com sucesso")
             })
             .catch((err) => {
                 alert("Discente possui pendência de empréstimo");
