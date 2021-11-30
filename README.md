@@ -45,6 +45,10 @@ O sistema implementado tem o objetivo de ajudar na organização de uma bibliote
 ```
 ├── Codigo
 │   ├── backend
+│   │    └── __tests__
+│   │        └── database
+│   │             └── unitarios
+│   │             └── validação
 │   └── frontend
 ├── Padrões Adotados
 └── Requisitos
@@ -106,7 +110,76 @@ $ yarn
 $ yarn start
 ```
 
+## :monocle_face: Como executar os testes unitários
+
+  Os testes unitários foram realizados utilizando Jest
+  
+  No windows, altere os scripts do arquivo package.json de:
+  
+ Versão ubuntu
+ ```json
+"scripts": {
+        "start": "nodemon src/server.js --ignore __tests__",
+        "pretest": "NODE_ENV=test knex migrate:latest",
+        "test": "NODE_ENV=test jest",
+        "posttest": "NODE_ENV=test knex migrate:rollback --all"
+    }
+```
+ 
+ Para:
+ 
+ Versão Windows
+ ```json
+"scripts": {
+        "start": "nodemon src/server.js --ignore __tests__",
+        "pretest": "SET NODE_ENV=test&&knex migrate:latest",
+        "test": "jest",
+        "posttest": "SET NODE_ENV=test&&knex migrate:rollback --all"
+    }
+```
+
+Para realização dos testes execute os seguintes comandos:
+
+```bash
+# Acesse a pasta do backend
+$ cd Codigo/backend
+
+# Execução 
+$ npm test
+```
+
+Caso esteja utilizando o yarn:
+
+```bash
+# Acesse a pasta do backend
+$ cd Codigo/backend
+
+# Execução 
+$ yarn test
+```
+
+## :construction_worker: Regras de Codificação
+
+-   Utilizar indentação, de maneira correta e padronizada;
+
+    -   Utilizar tabulações;
+
+-   Utilizar nomes de atributos e funções significativos e autoexplicativos;
+
+    -   Ex: cadastrar, buscar, etc;
+
+-   Utilizar inicial minúscula em nomes de atributos e funções;
+
+-   Utilizar inicial maiúscula em nomes de classes;
+
+-   Utilizar apenas formato de comentário de blocos ao comentar o código;
+
+-   Informar em comentário a descrição de funções e seus parâmetros de forma clara e objetiva;
+
+-   Utilizar bloco try/catch com as devidas mensagens de erro em tentativas de acessos de funcionalidades;
+
 ## :pushpin: Padrões de commit
 
 -   Utilizar verbos no gerúndio
 -   Fazer referência ao requisito que esta sendo desenvolvido ou foi implementado
+

@@ -119,8 +119,8 @@ describe('Testes Sucesso', function() {
       assert(elements.length)
     }
   })
-  it('[CT004] Cadastrar discentes - Sucesso', async function() {
-    // Test name: [CT004] Cadastrar discentes - Sucesso
+  it('[CT005] Cadastrar discentes - Sucesso', async function() {
+    // Test name: [CT005] Cadastrar discentes - Sucesso
     // Step # | name | target | value
     // 1 | open | http://localhost:3000/home | 
     await driver.get("http://localhost:3000/home")
