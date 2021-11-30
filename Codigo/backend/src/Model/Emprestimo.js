@@ -1,6 +1,4 @@
 const { Model } = require("objection");
-const Discente = require("./Discente");
-const Exemplar = require("./Exemplar");
 
 const connection = require("../database");
 
