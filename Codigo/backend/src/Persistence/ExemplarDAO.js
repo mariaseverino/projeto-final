@@ -30,7 +30,6 @@ class ExemplarDAO {
     }
 
     async alterarDadosExemplar(dados, id) {
-        console.log(dados);
         await Exemplar.query()
             .update({
                 nome: dados.nome,
@@ -49,11 +48,9 @@ class ExemplarDAO {
             .first();
         /* tem que retorna undefined */
         /* se existir um exemplar ele não pde ser removido pois esta emprestado */
-        console.log(emprestimo);
 
         /* se o livro nao tiver emprestado vai retornar undefined */
         if (emprestimo !== undefined) {
-            console.log("nao removeu");
             throw new Error("Exemplar não pode ser removido");
         }
         // await Exemplar.query().where({ id }).del();

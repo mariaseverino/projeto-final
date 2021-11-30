@@ -122,8 +122,6 @@ class EmprestimoDAO {
             .select(
                 "emprestimos.id",
                 "emprestimos.idExemplar",
-                "emprestimos.idDiscente",
-                "discentes.numEmprestimos",
                 "exemplares.qtdExemplares"
             )
             .findById(id);

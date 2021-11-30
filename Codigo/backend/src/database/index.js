@@ -1,14 +1,12 @@
 const knex = require("knex");
 const knexfile = require("../../knexfile");
 
-console.log("qual a connecção");
 let connection = null;
 
-connection =
-    process.env.NODE_ENV === "test"
-        ? knex(knexfile.test)
-        : knex(knexfile.development);
-
-console.log(connection);
+if (process.env.NODE_ENV === "test") {
+    connection = knex(knexfile.test);
+} else {
+    connection = knex(knexfile.development);
+}
 
 module.exports = connection;

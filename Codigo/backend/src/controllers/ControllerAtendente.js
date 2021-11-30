@@ -6,7 +6,6 @@ class ControllerAtendente {
             let atendenteDAO = new AtendenteDAO();
 
             const dados = await atendenteDAO.listarAtendentes();
-            console.log(dados);
 
             return res.json(dados);
         } catch (err) {

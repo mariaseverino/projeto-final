@@ -1,3 +1,4 @@
+const connection = require("../database");
 const Discente = require("../Model/Discente");
 
 class DiscenteDAO {
@@ -29,11 +30,13 @@ class DiscenteDAO {
             throw new Error("Discente ja existe");
         }
 
-        await Discente.query().insert({
+        discente = await Discente.query().insert({
             nome: dados.nome,
             matricula: parseInt(dados.matricula),
             cpf: parseInt(dados.cpf),
         });
+
+        return discente;
     }
 
     async alterarDadosDiscente(dados, id) {
@@ -51,7 +54,6 @@ class DiscenteDAO {
             .where("numEmprestimos", ">", 0)
             .findById(id);
 
-        console.log(discente);
         if (discente !== undefined) {
             throw new Error(
                 "Discente não pode ser removido, pois possui pendencias"

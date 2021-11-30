@@ -19,9 +19,9 @@ class ControllerDiscente {
 
             let discenteDAO = new DiscenteDAO();
 
-            await discenteDAO.cadastrarDiscente(dados);
+            const discente = await discenteDAO.cadastrarDiscente(dados);
 
-            return res.status(201).send();
+            return res.status(201).json({ discente });
         } catch (err) {
             return res.status(400).send({ erro: err.message });
         }
