@@ -1,6 +1,10 @@
 # Biblioteca Universitária
 
 <div align="center">
+<img alt="GitHub top language" src="./Codigo/frontend/src/assets/livro.svg" width="200px">
+</div>
+
+<div align="center">
   <p>
     <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/mariaseverino/projeto-final?color=6C63FF&logoColor=6C63FF&style=for-the-badge">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/mariaseverino/projeto-final?color=6C63FF&logoColor=6C63FF&style=for-the-badge">
@@ -16,7 +20,10 @@
 
 <p align="center">
  <a href="#Como executar o projeto">Como executar o projeto</a> •
- <a href="#Padrões de Commit">Padrões de commit</a>
+ <a href="#Como executar os testes unitários">Como executar os testes unitários</a> •
+ <a href="#Padrões de Commit">Padrões de commit</a> •
+ <a href="#Regras de Codificação">Regras de Codificação</a>
+
 </p>
 
 ## :sparkles: Sobre
@@ -115,30 +122,32 @@ $ yarn start
 
 ## :monocle_face: Como executar os testes unitários
 
-  Os testes unitários foram realizados utilizando Jest
-  
-  No windows, altere os scripts do arquivo package.json de:
-  
- Versão ubuntu
- ```json
+Os testes unitários foram realizados utilizando Jest
+
+No windows, altere os scripts do arquivo package.json de:
+
+Versão ubuntu
+
+```json
 "scripts": {
-        "start": "nodemon src/server.js --ignore __tests__",
-        "pretest": "NODE_ENV=test knex migrate:latest",
-        "test": "NODE_ENV=test jest",
-        "posttest": "NODE_ENV=test knex migrate:rollback --all"
-    }
+       "start": "nodemon src/server.js --ignore __tests__",
+       "pretest": "NODE_ENV=test knex migrate:latest",
+       "test": "NODE_ENV=test jest",
+       "posttest": "NODE_ENV=test knex migrate:rollback --all"
+   }
 ```
- 
- Para:
- 
- Versão Windows
- ```json
+
+Para:
+
+Versão Windows
+
+```json
 "scripts": {
-        "start": "nodemon src/server.js --ignore __tests__",
-        "pretest": "SET NODE_ENV=test&&knex migrate:latest",
-        "test": "jest",
-        "posttest": "SET NODE_ENV=test&&knex migrate:rollback --all"
-    }
+       "start": "nodemon src/server.js --ignore __tests__",
+       "pretest": "SET NODE_ENV=test&&knex migrate:latest",
+       "test": "jest",
+       "posttest": "SET NODE_ENV=test&&knex migrate:rollback --all"
+   }
 ```
 
 Para realização dos testes execute os seguintes comandos:
@@ -147,7 +156,7 @@ Para realização dos testes execute os seguintes comandos:
 # Acesse a pasta do backend
 $ cd Codigo/backend
 
-# Execução 
+# Execução
 $ npm test
 ```
 
@@ -157,7 +166,7 @@ Caso esteja utilizando o yarn:
 # Acesse a pasta do backend
 $ cd Codigo/backend
 
-# Execução 
+# Execução
 $ yarn test
 ```
 
@@ -185,4 +194,3 @@ $ yarn test
 
 -   Utilizar verbos no gerúndio
 -   Fazer referência ao requisito que esta sendo desenvolvido ou foi implementado
-
