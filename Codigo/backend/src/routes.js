@@ -22,14 +22,14 @@ routes
 
     .get("/discentes", controllerDiscente.listar)
     .post("/discente", controllerDiscente.criar)
-    .get("/discente/alterar/:id", controllerDiscente.alterar1)
-    .put("/discente/alterar/:id", controllerDiscente.alterar2)
+    .get("/discente/alterar/:id", controllerDiscente.buscarDiscente)
+    .put("/discente/alterar/:id", controllerDiscente.alterar)
     .delete("/discente/:id", controllerDiscente.remover)
 
     .get("/exemplares", controllerExemplar.listar)
     .post("/exemplar", controllerExemplar.criar)
-    .get("/exemplar/alterar/:id", controllerExemplar.alterar1)
-    .put("/exemplar/alterar/:id", controllerExemplar.alterar2)
+    .get("/exemplar/alterar/:id", controllerExemplar.buscarExemplar)
+    .put("/exemplar/alterar/:id", controllerExemplar.alterar)
     .delete("/exemplar/:id", controllerExemplar.remover)
 
     .get("/emprestimos", controllerEmprestimo.listar)

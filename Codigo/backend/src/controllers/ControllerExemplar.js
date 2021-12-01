@@ -27,7 +27,7 @@ class ControllerExemplar {
         }
     }
 
-    async alterar1(req, res) {
+    async buscarExemplar(req, res) {
         try {
             const { id } = req.params;
 
@@ -41,7 +41,7 @@ class ControllerExemplar {
         }
     }
 
-    async alterar2(req, res) {
+    async alterar(req, res) {
         try {
             const dados = req.body;
             const { id } = req.params;
