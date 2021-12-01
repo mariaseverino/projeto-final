@@ -52,7 +52,10 @@ O sistema implementado tem o objetivo de ajudar na organização de uma bibliote
 │   └── frontend
 ├── Padrões Adotados
 └── Requisitos
-    └── Diagrama de Classe
+    └── Diagramas de Projeto
+        └── Diagrama de Caso de Uso
+        └── Diagrama de Classe
+        └── Diagrama de Implantação
         └── Diagrama de Sequencia
 ```
 
