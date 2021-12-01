@@ -1,7 +1,7 @@
 # Biblioteca Universitária
 
 <div align="center">
-<img alt="GitHub top language" src="./Codigo/frontend/src/assets/livro.svg" width="200px">
+<img alt="livro" src="./Codigo/frontend/src/assets/livro.svg" width="200px">
 </div>
 
 <div align="center">
