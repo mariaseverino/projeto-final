@@ -74,7 +74,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina o [Node.js](
 
 ```bash
 # Clone este repositório
-$ git clone git clone https://github.com/mariaseverino/projeto-final.git
+$ git clone https://github.com/mariaseverino/projeto-final.git
 
 # Acesse a pasta do projeto
 $ cd projeto-final
