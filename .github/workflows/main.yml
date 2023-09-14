@@ -1,0 +1,21 @@
+name: Rodar Testes
+
+on:
+    push:
+        branches:
+            - main
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v3
+            - name: usando node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 18.
+            - name: run install and test
+              run: |
+                  cd Codigo/backend
+                  npm install
+                  npm run test
