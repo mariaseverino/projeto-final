@@ -19,3 +19,4 @@ jobs:
                   cd Codigo/backend
                   ls
                   npm install --legacy-peer-deps
+                  npm run test
