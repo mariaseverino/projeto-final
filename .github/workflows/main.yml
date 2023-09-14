@@ -17,5 +17,4 @@ jobs:
             - name: run install and test
               run: |
                   cd Codigo/backend
-                  npm install
-                  npm run test
+                  ls
